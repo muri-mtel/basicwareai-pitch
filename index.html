@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basicware AI — The ByteDance AI Stack in Thailand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #FFFFFF;
+    --blue: #2563EB;
+    --blue-light: #60A5FA;
+    --blue-mid: #1E3A8A;
+    --dark: #0F172A;
+    --gray: #94A3B8;
+    --gray-light: #E2E8F0;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+  }
+
+  /* ── Progress bar ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue-light), var(--blue));
+    transition: width 0.4s ease;
+    z-index: 100;
+    box-shadow: 0 0 12px var(--blue-light);
+  }
+
+  /* ── Logo ── */
+  #logo {
+    position: fixed; top: 24px; left: 32px;
+    z-index: 100;
+    height: 36px;
+    opacity: 0.9;
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s;
+  }
+  body.light-slide #logo { filter: none; }
+
+  /* ── Nav + counter — centered ── */
+  #nav-bar {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px;
+    z-index: 100;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(96,165,250,0.15);
+    border-radius: 40px;
+    padding: 8px 16px;
+  }
+  .nav-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(96,165,250,0.3);
+    background: transparent;
+    color: var(--white);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .nav-btn:hover {
+    background: rgba(37,99,235,0.4);
+    border-color: var(--blue-light);
+    box-shadow: 0 0 16px rgba(96,165,250,0.3);
+  }
+  .nav-btn:disabled { opacity: 0.25; cursor: default; }
+  #slide-counter {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--gray);
+    text-transform: uppercase;
+    min-width: 52px; text-align: center;
+  }
+
+  /* ── Particle canvas ── */
+  #particle-canvas {
+    position: fixed; inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  /* ── Slide deck ── */
+  #deck { position: fixed; inset: 0; z-index: 10; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateX(40px);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: all; transform: translateX(0); }
+  .slide.exit-left { opacity: 0; transform: translateX(-40px); }
+
+  .slide-dark { background: transparent; }
+  .slide-light { background: var(--white); color: var(--dark); }
+
+  /* ── Typography ── */
+  .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-light);
+    margin-bottom: 16px; display: block;
+  }
+  .slide-light .tag { color: var(--blue); }
+
+  h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
+  h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; line-height: 1.3; }
+  p, li { font-size: clamp(0.92rem, 1.3vw, 1.1rem); font-weight: 400; line-height: 1.7; color: var(--gray); }
+  .slide-light p, .slide-light li { color: #475569; }
+  .highlight { color: var(--blue-light); }
+  .slide-light .highlight { color: var(--blue); }
+  strong { font-weight: 700; color: var(--white); }
+  .slide-light strong { color: var(--dark); }
+
+  .slide-center { text-align: center; max-width: 900px; width: 100%; }
+  .slide-left { text-align: left; max-width: 900px; width: 100%; }
+
+  /* ── Entrance animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-1 { animation: fadeUp 0.6s ease both; }
+  .anim-2 { animation: fadeUp 0.6s 0.12s ease both; }
+  .anim-3 { animation: fadeUp 0.6s 0.24s ease both; }
+  .anim-4 { animation: fadeUp 0.6s 0.36s ease both; }
+  .anim-5 { animation: fadeUp 0.6s 0.48s ease both; }
+  .anim-6 { animation: fadeUp 0.6s 0.60s ease both; }
+
+  /* ── Modal overlay ── */
+  #modal {
+    position: fixed; inset: 0;
+    z-index: 200;
+    background: rgba(5,10,20,0.92);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #modal.open { opacity: 1; pointer-events: all; }
+  #modal-close {
+    position: absolute; top: 24px; right: 32px;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid rgba(96,165,250,0.4);
+    background: rgba(15,23,42,0.8);
+    color: var(--white); font-size: 20px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  #modal-close:hover { background: rgba(37,99,235,0.4); border-color: var(--blue-light); }
+  #modal-content { max-width: 90vw; max-height: 88vh; display: flex; align-items: center; justify-content: center; }
+  #modal-content img { max-width: 90vw; max-height: 88vh; border-radius: 12px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+  #modal-content video { max-width: 90vw; max-height: 88vh; border-radius: 12px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); outline: none; }
+
+  /* ════════════════════════════════════
+     SLIDE-SPECIFIC STYLES
+  ════════════════════════════════════ */
+
+  /* Slide 1: Cover */
+  #cursor-glow {
+    position: fixed; width: 560px; height: 560px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.38) 0%, rgba(30,58,138,0.18) 40%, transparent 70%);
+    pointer-events: none; transform: translate(-50%, -50%);
+    z-index: 5; opacity: 0; transition: opacity 0.4s ease;
+  }
+  body.on-slide-1 #cursor-glow { opacity: 1; }
+  #slide-1 .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 24px; }
+  #slide-1 h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  #slide-1 .subtitle { font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--gray); font-weight: 500; letter-spacing: 0.05em; }
+
+  /* Slide 2: Problem */
+  #slide-2 { overflow: hidden; }
+  #slide-2 .s2-bg-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; z-index: 0; opacity: 0.1;
+  }
+  #slide-2 .s2-overlay {
+    position: absolute; inset: 0;
+    background: rgba(10,16,40,0.6); z-index: 1;
+  }
+  #slide-2 .slide-left { position: relative; z-index: 2; }
+  #slide-2 .s2-content-box {
+    background: rgba(10, 16, 40, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(96,165,250,0.15);
+    border-radius: 16px;
+    padding: 60px 72px;
+  }
+  #slide-2 .accent-line {
+    width: 60px; height: 4px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    border-radius: 2px; margin-bottom: 32px;
+    animation: grow-line 0.8s 0.3s ease both;
+  }
+  @keyframes grow-line { from { width: 0; } to { width: 60px; } }
+  #slide-2 h2 { font-size: clamp(2.2rem, 4.5vw, 3.8rem); margin-bottom: 28px; }
+  #slide-2 .body-text p { font-size: clamp(1rem, 1.5vw, 1.2rem); margin-bottom: 16px; }
+
+  /* Slide 3: Who We Are */
+  #slide-3 .brand-logos {
+    display: flex; align-items: center; gap: 24px;
+    margin: 20px 0 8px;
+  }
+  #slide-3 .brand-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    border-radius: 24px;
+    border: 1px solid rgba(96,165,250,0.25);
+    background: rgba(37,99,235,0.08);
+    font-size: 0.82rem; font-weight: 700;
+    color: var(--white); letter-spacing: 0.02em;
+  }
+  #slide-3 .brand-chip svg { flex-shrink: 0; }
+  #slide-3 .stat-block {
+    display: flex; align-items: flex-start; gap: 40px;
+    margin-top: 32px; padding-top: 32px;
+    border-top: 1px solid rgba(96,165,250,0.2);
+  }
+  #slide-3 .big-stat {
+    font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; line-height: 1;
+    background: linear-gradient(135deg, var(--blue-light), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    white-space: nowrap;
+  }
+  #slide-3 .stat-label { padding-top: 10px; font-size: 0.92rem; color: var(--gray); line-height: 1.6; max-width: 320px; }
+
+  /* Slide 4: Exclusive — LIGHT */
+  #slide-4 .lock-ring {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 2px solid rgba(37,99,235,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 32px;
+    animation: ring-glow 2s ease-in-out infinite;
+  }
+  @keyframes ring-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+    50%       { box-shadow: 0 0 0 14px rgba(37,99,235,0.08); }
+  }
+  #slide-4 .partner-badge {
+    display: inline-block; margin-top: 28px;
+    padding: 10px 28px;
+    border: 1.5px solid rgba(234,88,12,0.4);
+    border-radius: 40px; font-size: 0.9rem; font-weight: 700;
+    color: #EA580C; letter-spacing: 0.04em;
+    background: rgba(234,88,12,0.07);
+  }
+
+  /* Slide 5: Two Pillars */
+  #slide-5 .pillar-card {
+    padding: 40px; border-radius: 16px;
+    border: 1px solid rgba(96,165,250,0.2);
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  #slide-5 .pillar-card:hover { border-color: rgba(96,165,250,0.5); background: rgba(37,99,235,0.08); }
+  #slide-5 .pillar-icon { font-size: 2.4rem; margin-bottom: 20px; display: block; }
+  #slide-5 .pillar-card h3 { font-size: 1.5rem; margin-bottom: 12px; }
+
+  /* Slide 6: Video */
+  #slide-6 { padding: 60px; }
+  #slide-6 .video-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; max-width: 1200px; width: 100%; align-items: center;
+  }
+  .video-thumb {
+    position: relative; border-radius: 12px; overflow: hidden; cursor: pointer;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(37,99,235,0.2);
+    border: 1px solid rgba(96,165,250,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .video-thumb:hover { transform: scale(1.02); box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 50px rgba(37,99,235,0.3); }
+  .video-thumb video { width: 100%; display: block; pointer-events: none; }
+  .play-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,16,40,0.35);
+    transition: background 0.2s;
+  }
+  .video-thumb:hover .play-overlay { background: rgba(10,16,40,0.2); }
+  .play-btn {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(37,99,235,0.9);
+    border: 2px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 30px rgba(37,99,235,0.6);
+    transition: transform 0.2s;
+  }
+  .video-thumb:hover .play-btn { transform: scale(1.1); }
+  .play-btn svg { margin-left: 4px; }
+  #slide-6 .cost-callout {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 24px; padding: 10px 20px;
+    background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
+    border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: var(--blue-light);
+  }
+
+  /* Slide 7: Image */
+  #slide-7 { padding: 48px 72px; }
+  #slide-7 .seedream-layout {
+    display: grid; grid-template-columns: 200px auto 1fr;
+    gap: 28px; align-items: center; width: 100%; max-width: 1200px;
+  }
+  #slide-7 .input-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  #slide-7 .input-col img {
+    width: 190px; border-radius: 12px;
+    border: 2px solid rgba(96,165,250,0.4);
+    box-shadow: 0 0 30px rgba(37,99,235,0.25); display: block;
+  }
+  #slide-7 .img-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--blue-light);
+    background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
+    border-radius: 20px; padding: 4px 12px;
+  }
+  #slide-7 .gen-col { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  #slide-7 .gen-arrow { font-size: 1.4rem; color: rgba(96,165,250,0.35); }
+  #slide-7 .gen-btn {
+    padding: 11px 20px; border-radius: 10px;
+    border: 1.5px solid rgba(96,165,250,0.5);
+    background: rgba(37,99,235,0.15); color: var(--white);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em;
+    cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+  }
+  #slide-7 .gen-btn:hover:not(:disabled) {
+    background: rgba(37,99,235,0.35); border-color: var(--blue-light);
+    box-shadow: 0 0 24px rgba(37,99,235,0.4); transform: scale(1.04);
+  }
+  #slide-7 .gen-btn:disabled { opacity: 0.45; cursor: default; transform: none; }
+  #slide-7 .gen-btn.generating { animation: pulse-btn 0.8s ease-in-out infinite; }
+  @keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+    50%       { box-shadow: 0 0 20px 6px rgba(37,99,235,0.4); }
+  }
+  #slide-7 .output-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  #slide-7 .out-img-wrap {
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(96,165,250,0.15);
+    opacity: 0; transform: scale(0.88) translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s;
+    cursor: pointer;
+  }
+  #slide-7 .out-img-wrap.revealed { opacity: 1; transform: scale(1) translateY(0); }
+  #slide-7 .out-img-wrap:hover { border-color: rgba(96,165,250,0.5); }
+  #slide-7 .out-img-wrap img { width: 100%; height: 135px; object-fit: cover; display: block; }
+  #slide-7 .slide-copy { margin-bottom: 20px; }
+
+  /* Slide 8: OmniHuman — video full */
+  #slide-8 { padding: 60px; }
+  #slide-8 .omni-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px; max-width: 1200px; width: 100%; align-items: center;
+  }
+  #slide-8 video {
+    width: 100%; border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(37,99,235,0.25);
+    border: 1px solid rgba(96,165,250,0.25); display: block;
+  }
+  #slide-8 .tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  #slide-8 .feature-tag {
+    padding: 6px 14px; border-radius: 20px;
+    background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
+    font-size: 0.82rem; font-weight: 600; color: var(--blue-light);
+  }
+
+  /* Slide 9: Business Analysis — LIGHT */
+  #slide-9 .analysis-steps {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px;
+  }
+  #slide-9 .step-card {
+    padding: 18px 22px; border-radius: 10px;
+    border: 1px solid var(--gray-light); background: #F8FAFC;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  #slide-9 .step-num {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
+    color: var(--blue); background: rgba(37,99,235,0.08);
+    border-radius: 6px; padding: 4px 8px; flex-shrink: 0;
+  }
+  #slide-9 .step-label { font-size: 0.92rem; font-weight: 600; color: var(--dark); }
+  #slide-9 .ticker {
+    font-family: monospace; font-size: 0.82rem;
+    color: var(--blue); background: rgba(37,99,235,0.05);
+    border: 1px solid rgba(37,99,235,0.2); border-radius: 6px;
+    padding: 12px 16px; margin-top: 24px;
+    overflow: hidden; white-space: nowrap; transition: opacity 0.2s;
+  }
+
+  /* Slide 10: Social Intelligence */
+  #slide-10 .platform-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  #slide-10 .platform-badge {
+    padding: 8px 18px; border-radius: 24px;
+    border: 1px solid rgba(96,165,250,0.3); background: rgba(37,99,235,0.1);
+    font-size: 0.88rem; font-weight: 600; color: var(--blue-light);
+    animation: badge-float 3s ease-in-out infinite;
+  }
+  #slide-10 .platform-badge:nth-child(2) { animation-delay: 0.3s; }
+  #slide-10 .platform-badge:nth-child(3) { animation-delay: 0.6s; }
+  #slide-10 .platform-badge:nth-child(4) { animation-delay: 0.9s; }
+  #slide-10 .platform-badge:nth-child(5) { animation-delay: 1.2s; }
+  #slide-10 .platform-badge:nth-child(6) { animation-delay: 1.5s; }
+  @keyframes badge-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  #slide-10 .wave-container { margin-top: 32px; height: 60px; width: 100%; max-width: 500px; }
+  #slide-10 svg { width: 100%; height: 100%; }
+  #slide-10 .s10-inner { display: flex; flex-direction: column; gap: 0; max-width: 860px; width: 100%; }
+  #slide-10 .s10-video-stripe {
+    width: 100%; height: 150px; border-radius: 12px 12px 0 0;
+    overflow: hidden; flex-shrink: 0;
+    border: 1px solid rgba(96,165,250,0.2); border-bottom: none;
+  }
+  #slide-10 .s10-video-stripe video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  #slide-10 .s10-content {
+    border: 1px solid rgba(96,165,250,0.15); border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 32px 36px 36px;
+  }
+
+  /* Slide 11: How We Work — LIGHT */
+  #slide-11 { align-items: center; justify-content: center; }
+  #slide-11 .s11-inner {
+    max-width: 1100px; width: 100%;
+    display: flex; flex-direction: column; align-items: center; gap: 40px;
+  }
+  #slide-11 .s11-header { text-align: center; }
+  #slide-11 .s11-header h2 { margin-bottom: 10px; }
+  #slide-11 .s11-header p { font-size: 1rem; color: #475569; }
+  #slide-11 .s11-timeline {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0; align-items: stretch; width: 100%;
+  }
+  #slide-11 .phase-card {
+    padding: 28px 28px 32px;
+    border-radius: 14px;
+    border: 1.5px solid var(--gray-light);
+    background: #F8FAFC;
+    display: flex; flex-direction: column; gap: 12px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #slide-11 .phase-card.visible { opacity: 1; transform: translateY(0); }
+  #slide-11 .phase-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 12px 32px rgba(37,99,235,0.1);
+  }
+  #slide-11 .phase-pill {
+    display: inline-block; width: fit-content;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: rgba(37,99,235,0.1); color: var(--blue);
+  }
+  #slide-11 .phase-title {
+    font-size: 1.2rem; font-weight: 800; color: var(--dark); line-height: 1.2;
+  }
+  #slide-11 .phase-who {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--blue);
+    margin-top: 4px;
+  }
+  #slide-11 .phase-body {
+    font-size: 0.92rem; color: #475569; line-height: 1.65;
+  }
+  #slide-11 .phase-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 16px; flex-shrink: 0;
+    opacity: 0; transform: scaleX(0); transform-origin: left center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  #slide-11 .phase-arrow.visible { opacity: 1; transform: scaleX(1); }
+  #slide-11 .phase-arrow svg { color: var(--blue); }
+
+  /* Slide 12: Two Ways — LIGHT */
+  #slide-12 .options-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin-top: 32px; width: 100%;
+  }
+  #slide-12 .option-card {
+    padding: 32px; border-radius: 16px;
+    border: 1.5px solid var(--gray-light);
+    background: #F8FAFC;
+    transition: all 0.3s ease; cursor: default;
+  }
+  #slide-12 .option-card:hover {
+    border-color: var(--blue);
+    background: #EFF6FF;
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(37,99,235,0.12);
+  }
+  #slide-12 .option-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+  #slide-12 .option-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--dark); }
+  #slide-12 .option-card p { font-size: 0.92rem; color: #475569; line-height: 1.65; }
+  #slide-12 .cta-btn {
+    display: inline-block; margin-top: 20px; padding: 10px 22px;
+    border-radius: 8px; font-size: 0.875rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s ease; border: none;
+    letter-spacing: 0.03em; font-family: 'Plus Jakarta Sans', sans-serif;
+    background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+    color: var(--white); box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  }
+  #slide-12 .cta-btn:hover { box-shadow: 0 6px 24px rgba(37,99,235,0.5); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<img id="logo" src="assets/logo.png" alt="Basicware AI">
+<canvas id="particle-canvas"></canvas>
+<div id="cursor-glow"></div>
+
+<!-- Modal -->
+<div id="modal">
+  <button id="modal-close" onclick="closeModal()">✕</button>
+  <div id="modal-content"></div>
+</div>
+
+<div id="deck">
+
+  <!-- Slide 1: Cover -->
+  <div class="slide slide-dark" id="slide-1">
+    <div class="slide-center" style="position:relative;z-index:2;">
+      <p class="eyebrow anim-1">Basicware AI × BytePlus</p>
+      <h1 class="anim-2">The ByteDance AI Stack,<br>Delivered in Thailand</h1>
+      <p class="subtitle anim-3" style="margin-top:24px;">Beyond Off-the-Shelf AI</p>
+    </div>
+  </div>
+
+  <!-- Slide 2: Problem -->
+  <div class="slide slide-dark" id="slide-2">
+    <video class="s2-bg-video" id="s2-bg-video" autoplay muted loop playsinline>
+      <source src="assets/bg_slide2.mov" type="video/mp4">
+    </video>
+    <div class="s2-overlay"></div>
+    <div class="slide-left">
+      <div class="s2-content-box">
+        <div class="accent-line anim-1"></div>
+        <h2 class="anim-2">Your competitors<br>aren't waiting.</h2>
+        <div style="margin-top:32px; max-width:620px;">
+          <p class="anim-3" style="margin-bottom:16px;">Content demand is exploding. Decisions still get made on gut feel. And the distance between having an idea and shipping it is where <strong>deals are lost</strong>.</p>
+          <p class="anim-4">The companies pulling ahead aren't the ones with more AI tools. They're the ones with <strong>better AI than everyone else has</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Who We Are -->
+  <div class="slide slide-dark" id="slide-3">
+    <div class="slide-left" style="max-width:860px;">
+      <span class="tag anim-1">The Technology</span>
+      <h2 class="anim-2">Built by the team behind<br><span class="highlight">TikTok, CapCut, and Douyin.</span></h2>
+      <!-- Brand logos -->
+      <div class="brand-logos anim-3">
+        <!-- TikTok -->
+        <div class="brand-chip">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.84 1.56V6.78a4.85 4.85 0 01-1.07-.09z" fill="white"/>
+          </svg>
+          TikTok
+        </div>
+        <!-- CapCut -->
+        <div class="brand-chip">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5" fill="white" fill-opacity="0.15"/>
+            <path d="M8 8l8 4-8 4V8z" fill="white"/>
+          </svg>
+          CapCut
+        </div>
+        <!-- Douyin -->
+        <div class="brand-chip">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" fill="none"/>
+            <path d="M15 9a3 3 0 01-3 3 3 3 0 01-3-3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <circle cx="12" cy="15" r="2" fill="white"/>
+          </svg>
+          Douyin
+        </div>
+      </div>
+      <p class="anim-4" style="margin-top:16px; max-width:580px;">BytePlus is the enterprise AI arm of ByteDance — the company that built the platforms billions of people open every day. They don't just know AI. They know what holds human attention, what converts, and what scales.</p>
+      <div class="stat-block anim-5">
+        <div class="big-stat" id="stat-counter">0%</div>
+        <div class="stat-label">
+          <strong>China's public cloud LLM market share</strong> in H1 2025 — more than the next several competitors combined.<br>
+          <span style="font-size:0.78rem;color:rgba(148,163,184,0.6);margin-top:6px;display:block;">Source: IDC, 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Exclusive Partner — LIGHT -->
+  <div class="slide slide-light" id="slide-4">
+    <div class="slide-center">
+      <div class="lock-ring anim-1">🔐</div>
+      <span class="tag anim-2">Exclusivity</span>
+      <h2 class="anim-3">BytePlus doesn't<br>sell to everyone.</h2>
+      <p class="anim-4" style="max-width:500px;margin:20px auto 0;">They choose their partners. In Thailand, that partner is <strong>Basicware AI TH</strong>.</p>
+      <p class="anim-5" style="max-width:500px;margin:10px auto 0;">No reseller marketplace. No procurement portal.</p>
+      <div class="partner-badge anim-6">You are one of the first 10 companies in Thailand to have access to this stack.</div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Two Pillars -->
+  <div class="slide slide-dark" id="slide-5">
+    <div style="max-width:1000px;width:100%;">
+      <span class="tag anim-1" style="text-align:center;display:block;">The Capability</span>
+      <h2 class="anim-2" style="text-align:center;margin-bottom:44px;">Two things every business needs.</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div class="pillar-card anim-3">
+                    <h3 class="highlight">Create faster.</h3>
+          <p style="margin-top:12px;">Video, images, websites, digital humans — produced at the speed of an idea.</p>
+        </div>
+        <div class="pillar-card anim-4">
+                    <h3 class="highlight">Understand deeper.</h3>
+          <p style="margin-top:12px;">Your customers, your competitors, your market — read in real time, not in quarterly reports.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: CREATE — Video -->
+  <div class="slide slide-dark" id="slide-6">
+    <div class="video-layout">
+      <div>
+        <span class="tag anim-1">Create / Video</span>
+        <h2 class="anim-2">Cinematic video.<br>In minutes. Not weeks.</h2>
+        <p class="anim-3" style="margin-top:20px;"><strong>Seedance 1.5 Pro</strong> — BytePlus's flagship video generation model. Independently benchmarked above Kling 2.6 and Google's Veo 3.1 on both video quality and audio synchronization.</p>
+        <p class="anim-4" style="margin-top:12px;">Brief in, finished spot out. Music-synced. Direction-aware.</p>
+        <div class="cost-callout anim-5">
+          <span>💰</span><span>10% of traditional production cost</span>
+        </div>
+      </div>
+      <div class="anim-4">
+        <div class="video-thumb" onclick="openVideoModal('assets/seedanceexample.MP4')">
+          <video muted playsinline preload="metadata" id="s6-preview">
+            <source src="assets/seedanceexample.MP4#t=0.5" type="video/mp4">
+          </video>
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: CREATE — Image -->
+  <div class="slide slide-dark" id="slide-7">
+    <div style="max-width:1200px;width:100%;">
+      <div class="slide-copy">
+        <span class="tag anim-1">Create / Image</span>
+        <h2 class="anim-2">One photo. Infinite campaign assets.</h2>
+        <p class="anim-3" style="max-width:600px;margin-top:10px;"><strong>Seedream 5.0 Lite</strong> — preserves the face, setting, and brand details while generating unlimited outfit and styling variants. No reshooting required.</p>
+      </div>
+      <div class="seedream-layout anim-4">
+        <div class="input-col">
+          <img src="assets/inputA.png" alt="Source photo">
+          <span class="img-label">Source photo</span>
+        </div>
+        <div class="gen-col">
+          <span class="gen-arrow">→</span>
+          <button class="gen-btn" id="gen-btn" onclick="revealOutputs()">Generate variants →</button>
+          <span class="gen-arrow">→</span>
+        </div>
+        <div class="output-col" id="output-grid">
+          <div class="out-img-wrap" onclick="openImageModal('assets/outputA1.png')"><img src="assets/outputA1.png" alt="Variant 1"></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/outputA2.png')"><img src="assets/outputA2.png" alt="Variant 2"></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/outputA3.png')"><img src="assets/outputA3.png" alt="Variant 3"></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/outputA4.png')"><img src="assets/outputA4.png" alt="Variant 4"></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/outputA5.png')"><img src="assets/outputA5.png" alt="Variant 5"></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/outputA6.png')"><img src="assets/outputA6.png" alt="Variant 6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: CREATE — Digital Humans -->
+  <div class="slide slide-dark" id="slide-8">
+    <div class="omni-layout">
+      <div>
+        <span class="tag anim-1">Create / Digital Humans</span>
+        <h2 class="anim-2">Turn a single photo<br>into a spokesperson.</h2>
+        <p class="anim-3" style="margin-top:20px;"><strong>OmniHuman 1.5</strong> — feed it an image and an audio file. Out comes a lifelike video. Perfect lip-sync. Real expressions. Any language.</p>
+        <p class="anim-4" style="margin-top:12px;">Brand ambassadors, training videos, localized campaigns — without a studio.</p>
+        <div class="tag-row anim-5">
+          <span class="feature-tag">Perfect lip-sync</span>
+          <span class="feature-tag">Any language</span>
+          <span class="feature-tag">Real expressions</span>
+          <span class="feature-tag">No studio needed</span>
+        </div>
+      </div>
+      <div class="anim-3">
+        <div class="video-thumb" onclick="openVideoModal('assets/Omnihuman-1.5.mp4')">
+          <video muted playsinline preload="metadata">
+            <source src="assets/Omnihuman-1.5.mp4#t=0.5" type="video/mp4">
+          </video>
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: UNDERSTAND — Business Analysis — LIGHT -->
+  <div class="slide slide-light" id="slide-9">
+    <div class="slide-left" style="max-width:900px;">
+      <span class="tag anim-1">Understand / Business Analysis</span>
+      <h2 class="anim-2">See your business the<br>way the data sees it.</h2>
+      <p class="anim-3" style="margin-top:16px;max-width:580px;">Ask in plain language. Get a structured analysis — powered by BytePlus's <strong>Data Agent</strong>, which queries your data, writes its own SQL, runs the analysis, and writes the report.</p>
+      <div class="analysis-steps anim-4">
+        <div class="step-card"><span class="step-num">GOAL</span><span class="step-label">Define the business question</span></div>
+        <div class="step-card"><span class="step-num">METHOD</span><span class="step-label">Auto-generate SQL queries</span></div>
+        <div class="step-card"><span class="step-num">ANALYSIS</span><span class="step-label">Run real-time data exploration</span></div>
+        <div class="step-card"><span class="step-num">REPORT</span><span class="step-label">Recommendations you can act on</span></div>
+      </div>
+      <div class="ticker anim-5" id="sql-ticker">SELECT * FROM business_insights WHERE timeframe = 'now'...</div>
+    </div>
+  </div>
+
+  <!-- Slide 10: UNDERSTAND — Social Intelligence -->
+  <div class="slide slide-dark" id="slide-10">
+    <div class="s10-inner">
+      <div class="s10-video-stripe">
+        <video autoplay muted loop playsinline id="s10-video">
+          <source src="assets/08-optimized.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="s10-content">
+        <div class="slide-left" style="max-width:860px;">
+          <span class="tag anim-1">Understand / Social Intelligence</span>
+          <h2 class="anim-2">Know what the market feels —<br>before it shows up in sales.</h2>
+          <p class="anim-3" style="margin-top:16px;max-width:580px;">Real-time sentiment across every major platform. Your brand, your competitors, your category — <strong>read continuously, not surveyed quarterly</strong>.</p>
+          <div class="platform-grid anim-4">
+            <span class="platform-badge">TikTok</span>
+            <span class="platform-badge">Facebook</span>
+            <span class="platform-badge">Instagram</span>
+            <span class="platform-badge">X / Twitter</span>
+            <span class="platform-badge">Line</span>
+            <span class="platform-badge">WeChat</span>
+          </div>
+          <div class="wave-container anim-5">
+            <svg viewBox="0 0 500 60" preserveAspectRatio="none">
+              <path id="wave-path" fill="none" stroke="url(#waveGrad)" stroke-width="2"/>
+              <defs>
+                <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#2563EB;stop-opacity:0.3"/>
+                  <stop offset="50%" style="stop-color:#60A5FA;stop-opacity:1"/>
+                  <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0.3"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 11: How We Work — LIGHT -->
+  <div class="slide slide-light" id="slide-11">
+    <div class="s11-inner">
+      <div class="s11-header anim-1">
+        <span class="tag">Partnership</span>
+        <h2>Not a license. A partnership.</h2>
+        <p>We start by running it. We end by handing it over.</p>
+      </div>
+      <div class="s11-timeline">
+        <!-- Phase 1 -->
+        <div class="phase-card" id="phase-1">
+          <span class="phase-pill">Phase 1</span>
+          <div class="phase-title">Managed Service</div>
+          <div class="phase-who">Basicware AI runs everything</div>
+          <p class="phase-body">Prompt engineering, content production, and delivery — all handled by us. You see results without lifting a finger.</p>
+        </div>
+        <!-- Arrow 1 -->
+        <div class="phase-arrow" id="phase-arrow-1">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </div>
+        <!-- Phase 2 -->
+        <div class="phase-card" id="phase-2">
+          <span class="phase-pill">Phase 2</span>
+          <div class="phase-title">Build &amp; Embed</div>
+          <div class="phase-who">Joint — we implement, you learn</div>
+          <p class="phase-body">We integrate the stack into your workflows, set up the infrastructure, and train your team on how to use and direct it.</p>
+        </div>
+        <!-- Arrow 2 -->
+        <div class="phase-arrow" id="phase-arrow-2">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </div>
+        <!-- Phase 3 -->
+        <div class="phase-card" id="phase-3">
+          <span class="phase-pill">Phase 3</span>
+          <div class="phase-title">Your Team Owns It</div>
+          <div class="phase-who">Marketing / e-com / retail team</div>
+          <p class="phase-body">Your internal teams take ownership of prompt engineering and content creation. We stay on support — you drive the output.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 12: Two Ways to Start — LIGHT -->
+  <div class="slide slide-light" id="slide-12">
+    <div style="max-width:960px;width:100%;">
+      <span class="tag anim-1" style="text-align:center;display:block;">Get Started</span>
+      <h2 class="anim-2" style="text-align:center;">Two ways to start.</h2>
+      <div class="options-grid">
+        <div class="option-card anim-3">
+          <span class="option-icon">🔍</span>
+          <h3>The Intelligence Report</h3>
+          <p>We profile your customers, your competitors, and your market. What's working in your category. What isn't. Where the opportunity is. A report you can act on, built on signals most agencies can't see.</p>
+          <button class="cta-btn">Request Report →</button>
+        </div>
+        <div class="option-card anim-4">
+          <span class="option-icon">🎯</span>
+          <h3>The Problem Statement</h3>
+          <p>You tell us what's slowing your business down. We find — or build — the AI that fixes it. No brief template. No procurement form. Just a conversation.</p>
+          <button class="cta-btn">Start a Conversation →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div id="nav-bar">
+  <button class="nav-btn" id="btn-prev" disabled>&#8592;</button>
+  <span id="slide-counter">1 / 12</span>
+  <button class="nav-btn" id="btn-next">&#8594;</button>
+</div>
+
+<script>
+const TOTAL = 12;
+let current = 1;
+let animating = false;
+
+const getSlide = (n) => document.getElementById('slide-' + n);
+const progressBar = document.getElementById('progress-bar');
+const counter = document.getElementById('slide-counter');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+
+const lightSlides = new Set([4, 9, 11, 12]);
+
+function goTo(next, dir = 1) {
+  if (animating || next < 1 || next > TOTAL || next === current) return;
+  animating = true;
+  const outSlide = getSlide(current);
+  const inSlide = getSlide(next);
+  outSlide.classList.add('exit-left');
+  outSlide.classList.remove('active');
+  inSlide.style.transform = `translateX(${dir > 0 ? 40 : -40}px)`;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    inSlide.classList.add('active');
+    inSlide.style.transform = '';
+    current = next;
+    updateUI();
+    onSlideEnter(current);
+    setTimeout(() => { outSlide.classList.remove('exit-left'); animating = false; }, 420);
+  }));
+}
+
+function updateUI() {
+  counter.textContent = current + ' / ' + TOTAL;
+  progressBar.style.width = ((current / TOTAL) * 100) + '%';
+  btnPrev.disabled = current === 1;
+  btnNext.disabled = current === TOTAL;
+  document.body.classList.toggle('light-slide', lightSlides.has(current));
+  document.body.classList.toggle('on-slide-1', current === 1);
+  updateParticleVisibility();
+}
+
+function onSlideEnter(n) {
+  if (n === 2) { const v = document.getElementById('s2-bg-video'); if (v) v.play(); }
+  if (n === 3) animateStat();
+  if (n === 7) resetSlide7();
+  if (n === 9) animateTicker();
+  if (n === 10) { animateWave(); const v = document.getElementById('s10-video'); if (v) v.play(); }
+  if (n === 11) animatePhases();
+}
+
+// ── Modal ──
+function openVideoModal(src) {
+  const content = document.getElementById('modal-content');
+  content.innerHTML = `<video controls autoplay playsinline style="max-width:90vw;max-height:88vh;border-radius:12px;box-shadow:0 40px 80px rgba(0,0,0,0.6);outline:none;"><source src="${src}" type="video/mp4"></video>`;
+  document.getElementById('modal').classList.add('open');
+}
+function openImageModal(src) {
+  const content = document.getElementById('modal-content');
+  content.innerHTML = `<img src="${src}" alt="" style="max-width:88vw;max-height:88vh;border-radius:12px;box-shadow:0 40px 80px rgba(0,0,0,0.6);">`;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() {
+  const modal = document.getElementById('modal');
+  modal.classList.remove('open');
+  setTimeout(() => { document.getElementById('modal-content').innerHTML = ''; }, 300);
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── Slide 7 ──
+function resetSlide7() {
+  document.querySelectorAll('#output-grid .out-img-wrap').forEach(el => el.classList.remove('revealed'));
+  const btn = document.getElementById('gen-btn');
+  if (btn) { btn.disabled = false; btn.classList.remove('generating'); btn.textContent = 'Generate variants →'; }
+}
+function revealOutputs() {
+  const btn = document.getElementById('gen-btn');
+  if (!btn || btn.disabled) return;
+  btn.disabled = true; btn.classList.add('generating'); btn.textContent = 'Generating…';
+  const wraps = document.querySelectorAll('#output-grid .out-img-wrap');
+  wraps.forEach((el, i) => setTimeout(() => el.classList.add('revealed'), 600 + i * 130));
+  setTimeout(() => { btn.classList.remove('generating'); btn.textContent = '✓ 6 variants generated'; }, 600 + (wraps.length - 1) * 130 + 400);
+}
+
+// ── Stat counter (slide 3) ──
+function animateStat() {
+  const el = document.getElementById('stat-counter');
+  if (!el) return;
+  let val = 0; const target = 49.2; const step = target / 60;
+  el.textContent = '0%';
+  const iv = setInterval(() => {
+    val = Math.min(val + step, target);
+    el.textContent = val.toFixed(1) + '%';
+    if (val >= target) clearInterval(iv);
+  }, 16);
+}
+
+// ── SQL ticker (slide 9) ──
+const tickerLines = [
+  "SELECT * FROM customer_behavior WHERE date >= NOW() - INTERVAL '30d'",
+  "ANALYZING: conversion_funnel → bottleneck found at checkout step 3",
+  "INSIGHT: 34% drop-off correlates with mobile page load > 3s",
+  "RECOMMENDATION: optimize mobile checkout → est. +22% conversion",
+  "Running competitor analysis across 847 data points...",
+  "SELECT brand, sentiment_score FROM social_signals ORDER BY date DESC"
+];
+let tickerIdx = 0, tickerIv = null;
+function animateTicker() {
+  const el = document.getElementById('sql-ticker');
+  if (!el) return;
+  clearInterval(tickerIv); tickerIdx = 0; el.textContent = tickerLines[0];
+  tickerIv = setInterval(() => {
+    tickerIdx = (tickerIdx + 1) % tickerLines.length;
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = tickerLines[tickerIdx]; el.style.opacity = '1'; }, 200);
+  }, 2200);
+}
+
+// ── Wave (slide 10) ──
+function animateWave() {
+  const path = document.getElementById('wave-path');
+  if (!path) return;
+  let t = 0;
+  function draw() {
+    if (current !== 10) return;
+    t += 0.03;
+    const pts = [];
+    for (let x = 0; x <= 500; x += 5) {
+      const y = 30 + Math.sin((x / 500) * Math.PI * 4 + t) * 12 + Math.sin((x / 500) * Math.PI * 2 + t * 0.7) * 8;
+      pts.push(`${x},${y}`);
+    }
+    path.setAttribute('d', 'M ' + pts.join(' L '));
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ── Phase reveal (slide 11) ──
+function animatePhases() {
+  ['phase-1','phase-arrow-1','phase-2','phase-arrow-2','phase-3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+  const delays = { 'phase-1': 0, 'phase-arrow-1': 300, 'phase-2': 450, 'phase-arrow-2': 600, 'phase-3': 750 };
+  Object.entries(delays).forEach(([id, ms]) => {
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, ms);
+  });
+}
+
+// ── Cursor glow (slide 1) ──
+const cursorGlow = document.getElementById('cursor-glow');
+document.addEventListener('mousemove', e => {
+  cursorGlow.style.left = e.clientX + 'px';
+  cursorGlow.style.top = e.clientY + 'px';
+});
+
+// ── Keyboard ──
+document.addEventListener('keydown', e => {
+  if (document.getElementById('modal').classList.contains('open')) {
+    if (e.key === 'Escape') closeModal();
+    return;
+  }
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1, 1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1, -1); }
+});
+btnNext.addEventListener('click', () => goTo(current + 1, 1));
+btnPrev.addEventListener('click', () => goTo(current - 1, -1));
+
+// ── Particle canvas ──
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [], W, H, darkSlide = true;
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+function updateParticleVisibility() {
+  darkSlide = !lightSlides.has(current);
+  canvas.style.opacity = darkSlide ? '1' : '0';
+}
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.4; this.vy = (Math.random() - 0.5) * 0.4;
+    this.r = Math.random() * 2 + 1; this.alpha = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(96,165,250,${this.alpha})`; ctx.fill();
+  }
+}
+function initParticles() { particles = Array.from({ length: 60 }, () => new Particle()); }
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  if (!darkSlide) { requestAnimationFrame(drawParticles); return; }
+  particles.forEach(p => { p.update(); p.draw(); });
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(37,99,235,${(1-dist/120)*0.25})`; ctx.lineWidth = 1; ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+
+initParticles(); drawParticles();
+getSlide(1).classList.add('active');
+updateUI(); onSlideEnter(1);
+</script>
+</body>
+</html>
