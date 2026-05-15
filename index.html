@@ -278,7 +278,7 @@
   }
   #slide-4 .s4-left {
     display: flex; flex-direction: column; justify-content: center;
-    padding: 0 48px 0 0; gap: 0; height: 100%;
+    padding: 0 24px 0 0; gap: 0; height: 100%; align-items: flex-end; text-align: right;
   }
   #slide-4 .s4-stats {
     display: flex; flex-direction: column; gap: 0;
@@ -296,7 +296,7 @@
     border: 1px solid rgba(96,165,250,0.22);
     border-radius: 14px;
     padding: 20px 24px;
-    font-size: 0.88rem; color: var(--gray); line-height: 1.65;
+    font-size: 1rem; color: var(--gray); line-height: 1.65;
     opacity: 0;
     transition: opacity 0.45s ease, transform 0.45s ease;
     pointer-events: none;
@@ -306,9 +306,16 @@
   }
 
   #slide-4 .s4-step-label {
-    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--blue-light); margin-bottom: 6px;
+    color: var(--blue-light); margin-bottom: 8px;
+  }
+  #slide-4 .s4-step-title {
+    font-size: 1.35rem; font-weight: 700; color: var(--white);
+    margin-bottom: 8px; line-height: 1.25;
+  }
+  #slide-4 .s4-step-body {
+    font-size: 0.92rem; color: var(--gray); line-height: 1.6;
   }
   #slide-4 .s4-right {
     position: relative; height: 100%; align-self: stretch;
@@ -1114,12 +1121,11 @@ let s4Prev = 0;       // step animating FROM
 let s4TransStart = null;
 const S4_DUR = 1.1;   // seconds per transition
 
-const S4_LABELS = ['', '01', '02', '03'];
-const S4_TEXT = [
-  '',
-  'Precise targeting — the model knows what each segment responds to.',
-  'Right content, every time — audience-aware creative, not generic output.',
-  'Higher conversion — campaigns built on behavioural data perform differently.',
+const S4_STEPS = [
+  null,
+  { label: '01', title: 'Precise targeting', body: 'The model knows what each segment responds to.' },
+  { label: '02', title: 'Right content, every time', body: 'Audience-aware creative, not generic output.' },
+  { label: '03', title: 'Higher conversion', body: 'Campaigns built on behavioural data perform differently.' },
 ];
 
 function s4SetText(step) {
@@ -1127,8 +1133,9 @@ function s4SetText(step) {
   if (!el) return;
   el.classList.remove('visible');
   if (step > 0) {
+    const s = S4_STEPS[step];
     setTimeout(() => {
-      el.innerHTML = `<span class="s4-step-label">${S4_LABELS[step]}</span><br>${S4_TEXT[step]}`;
+      el.innerHTML = `<span class="s4-step-label">${s.label}</span><div class="s4-step-title">${s.title}</div><div class="s4-step-body">${s.body}</div>`;
       el.classList.add('visible');
     }, 200);
   }
