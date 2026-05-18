@@ -628,6 +628,38 @@
   #slide-12 .platform-badge:nth-child(5) { animation-delay: 1.2s; }
   #slide-12 .platform-badge:nth-child(6) { animation-delay: 1.5s; }
   @keyframes badge-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  #slide-12 .loop-bar {
+    display: flex; align-items: center; gap: 0;
+    margin-top: 24px; max-width: 500px;
+  }
+  #slide-12 .loop-step {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    flex: 1;
+  }
+  #slide-12 .loop-label {
+    font-size: 8px; font-weight: 800; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-light);
+  }
+  #slide-12 .loop-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blue-light);
+    box-shadow: 0 0 8px rgba(96,165,250,0.7);
+    animation: loop-pulse 2s ease-in-out infinite;
+  }
+  #slide-12 .loop-step:nth-child(3) .loop-dot { animation-delay: 0.5s; }
+  #slide-12 .loop-step:nth-child(5) .loop-dot { animation-delay: 1s; }
+  #slide-12 .loop-step:nth-child(7) .loop-dot { animation-delay: 1.5s; }
+  @keyframes loop-pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
+  #slide-12 .loop-arrow {
+    flex: 0.5; height: 1px;
+    background: linear-gradient(90deg, rgba(96,165,250,0.4), rgba(96,165,250,0.15));
+    position: relative; top: 6px;
+  }
+  #slide-12 .loop-arrow::after {
+    content: ''; position: absolute; right: -1px; top: -3px;
+    border: 3px solid transparent;
+    border-left: 5px solid rgba(96,165,250,0.4);
+  }
   #slide-12 .wave-container { margin-top: 32px; height: 60px; width: 100%; max-width: 500px; }
   #slide-12 svg { width: 100%; height: 100%; }
   #slide-12 .s10-inner { display: flex; flex-direction: column; gap: 0; max-width: 860px; width: 100%; }
@@ -1154,7 +1186,7 @@
         <div class="slide-left" style="max-width:860px;">
           <span class="tag anim-1">Understand / Social Intelligence</span>
           <h2 class="anim-2">Know what the market feels —<br>before it shows up in sales.</h2>
-          <p class="anim-3" style="margin-top:16px;max-width:580px;">Real-time sentiment across every major platform. Your brand, your competitors, your category — <strong>read continuously, not surveyed quarterly</strong>.</p>
+          <p class="anim-3" style="margin-top:16px;max-width:580px;">Real-time sentiment across every major platform. <strong>Not a quarterly report — a live loop.</strong> When trends shift, your brief updates. When a competitor moves, you see it before your next post goes out.</p>
           <div class="platform-grid anim-4">
             <span class="platform-badge">TikTok</span>
             <span class="platform-badge">Facebook</span>
@@ -1163,7 +1195,16 @@
             <span class="platform-badge">Line</span>
             <span class="platform-badge">WeChat</span>
           </div>
-          <div class="wave-container anim-5">
+          <div class="loop-bar anim-5">
+            <div class="loop-step"><span class="loop-label">Detect</span><div class="loop-dot"></div></div>
+            <div class="loop-arrow"></div>
+            <div class="loop-step"><span class="loop-label">Analyse</span><div class="loop-dot"></div></div>
+            <div class="loop-arrow"></div>
+            <div class="loop-step"><span class="loop-label">Adapt</span><div class="loop-dot"></div></div>
+            <div class="loop-arrow"></div>
+            <div class="loop-step"><span class="loop-label">Repeat</span><div class="loop-dot"></div></div>
+          </div>
+          <div class="wave-container anim-6">
             <svg viewBox="0 0 500 60" preserveAspectRatio="none">
               <path id="wave-path" fill="none" stroke="url(#waveGrad)" stroke-width="2"/>
               <defs>
