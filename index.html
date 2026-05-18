@@ -404,15 +404,25 @@
   /* Slide 6: The Stack */
   #slide-6 { background: transparent; }
   #slide-6 .stack-wrap {
-    max-width: 680px; width: 100%;
+    max-width: 720px; width: 100%;
     display: flex; flex-direction: column; gap: 0;
   }
   #slide-6 .stack-headline {
-    font-size: clamp(1rem, 1.4vw, 1.15rem); font-weight: 600;
-    letter-spacing: 0.05em; color: var(--gray);
-    text-align: center; margin-bottom: 36px;
+    text-align: center; margin-bottom: 40px; line-height: 1.1;
   }
-  #slide-6 .stack-headline strong { color: var(--white); }
+  #slide-6 .stack-headline strong {
+    display: block;
+    font-size: clamp(2rem, 3.6vw, 3rem); font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(120deg, var(--white) 40%, var(--blue-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  #slide-6 .stack-headline span {
+    display: block; margin-top: 10px;
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem); font-weight: 500;
+    letter-spacing: 0.04em; color: var(--gray);
+  }
   #slide-6 .stack-layer {
     border: 1px solid rgba(96,165,250,0.22);
     border-radius: 0; padding: 22px 32px;
@@ -954,7 +964,10 @@
   <!-- Slide 6: The Stack -->
   <div class="slide slide-dark" id="slide-6">
     <div class="stack-wrap">
-      <p class="stack-headline anim-1"><strong>The same architecture that runs TikTok.</strong><br>Now running for you.</p>
+      <div class="stack-headline anim-1">
+        <strong>The same architecture<br>that runs TikTok.</strong>
+        <span>Now running for you.</span>
+      </div>
 
       <div class="stack-layer anim-2">
         <div class="layer-label">Your Business</div>
