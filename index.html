@@ -401,21 +401,62 @@
     background: rgba(234,88,12,0.07);
   }
 
+  /* Slide 6: The Stack */
+  #slide-6 { background: transparent; }
+  #slide-6 .stack-wrap {
+    max-width: 680px; width: 100%;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  #slide-6 .stack-headline {
+    font-size: clamp(1rem, 1.4vw, 1.15rem); font-weight: 600;
+    letter-spacing: 0.05em; color: var(--gray);
+    text-align: center; margin-bottom: 36px;
+  }
+  #slide-6 .stack-headline strong { color: var(--white); }
+  #slide-6 .stack-layer {
+    border: 1px solid rgba(96,165,250,0.22);
+    border-radius: 0; padding: 22px 32px;
+    display: flex; flex-direction: column; gap: 6px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  #slide-6 .stack-layer:first-of-type { border-radius: 14px 14px 0 0; }
+  #slide-6 .stack-layer:last-of-type  { border-radius: 0 0 14px 14px; }
+  #slide-6 .stack-layer + .stack-layer { border-top: none; }
+  #slide-6 .layer-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--blue-light);
+  }
+  #slide-6 .layer-items {
+    font-size: clamp(0.82rem, 1.05vw, 0.95rem); font-weight: 500;
+    color: rgba(255,255,255,0.55); line-height: 1.5;
+  }
+  /* gradient: darkest bottom, lightest top */
+  #slide-6 .stack-layer:nth-child(1) { background: rgba(37,99,235,0.13); }
+  #slide-6 .stack-layer:nth-child(2) { background: rgba(37,99,235,0.09); }
+  #slide-6 .stack-layer:nth-child(3) { background: rgba(37,99,235,0.05); }
+  #slide-6 .stack-layer:nth-child(4) { background: rgba(37,99,235,0.02); }
+  #slide-6 .stack-footer {
+    text-align: center; margin-top: 28px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(96,165,250,0.55);
+  }
+
   /* Slide 5: Two Pillars */
-  #slide-6 .pillar-card {
+  #slide-7 .pillar-card {
     padding: 40px; border-radius: 16px;
     border: 1px solid rgba(96,165,250,0.2);
     background: rgba(255,255,255,0.03);
     backdrop-filter: blur(8px);
     transition: border-color 0.3s, background 0.3s;
   }
-  #slide-6 .pillar-card:hover { border-color: rgba(96,165,250,0.5); background: rgba(37,99,235,0.08); }
-  #slide-6 .pillar-icon { font-size: 2.4rem; margin-bottom: 20px; display: block; }
-  #slide-6 .pillar-card h3 { font-size: 1.5rem; margin-bottom: 12px; }
+  #slide-7 .pillar-card:hover { border-color: rgba(96,165,250,0.5); background: rgba(37,99,235,0.08); }
+  #slide-7 .pillar-icon { font-size: 2.4rem; margin-bottom: 20px; display: block; }
+  #slide-7 .pillar-card h3 { font-size: 1.5rem; margin-bottom: 12px; }
 
   /* Slide 6: Video */
-  #slide-7 { padding: 60px; }
-  #slide-7 .video-layout {
+  #slide-8 { padding: 60px; }
+  #slide-8 .video-layout {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 60px; max-width: 1200px; width: 100%; align-items: center;
   }
@@ -444,10 +485,10 @@
   }
   .video-thumb:hover .play-btn { transform: scale(1.1); }
   .play-btn svg { margin-left: 4px; }
-  #slide-7 .s6-tabs {
+  #slide-8 .s6-tabs {
     display: flex; gap: 8px; margin-bottom: 16px;
   }
-  #slide-7 .s6-tab {
+  #slide-8 .s6-tab {
     padding: 5px 18px; border-radius: 20px;
     font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
     border: 1.5px solid rgba(96,165,250,0.25);
@@ -455,16 +496,16 @@
     cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
     transition: all 0.2s ease;
   }
-  #slide-7 .s6-tab.active {
+  #slide-8 .s6-tab.active {
     background: rgba(37,99,235,0.25); border-color: var(--blue-light); color: var(--white);
   }
-  #slide-7 .s6-tab:hover:not(.active) { border-color: rgba(96,165,250,0.5); color: var(--white); }
-  #slide-7 .s6-panel { display: none; }
-  #slide-7 .s6-panel.active { display: block; }
-  #slide-7 .branding-grid {
+  #slide-8 .s6-tab:hover:not(.active) { border-color: rgba(96,165,250,0.5); color: var(--white); }
+  #slide-8 .s6-panel { display: none; }
+  #slide-8 .s6-panel.active { display: block; }
+  #slide-8 .branding-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
   }
-  #slide-7 .cost-callout {
+  #slide-8 .cost-callout {
     display: inline-flex; align-items: center; gap: 10px;
     margin-top: 24px; padding: 10px 20px;
     background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
@@ -472,26 +513,26 @@
   }
 
   /* Slide 7: Image */
-  #slide-8 { padding: 48px 72px; }
-  #slide-8 .seedream-layout {
+  #slide-9 { padding: 48px 72px; }
+  #slide-9 .seedream-layout {
     display: grid; grid-template-columns: 200px auto 1fr;
     gap: 28px; align-items: center; width: 100%; max-width: 1200px;
   }
-  #slide-8 .input-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  #slide-8 .input-col img {
+  #slide-9 .input-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  #slide-9 .input-col img {
     width: 190px; border-radius: 12px;
     border: 2px solid rgba(96,165,250,0.4);
     box-shadow: 0 0 30px rgba(37,99,235,0.25); display: block;
   }
-  #slide-8 .img-label {
+  #slide-9 .img-label {
     font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--blue-light);
     background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
     border-radius: 20px; padding: 4px 12px;
   }
-  #slide-8 .gen-col { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  #slide-8 .gen-arrow { font-size: 1.4rem; color: rgba(96,165,250,0.35); }
-  #slide-8 .gen-btn {
+  #slide-9 .gen-col { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  #slide-9 .gen-arrow { font-size: 1.4rem; color: rgba(96,165,250,0.35); }
+  #slide-9 .gen-btn {
     padding: 11px 20px; border-radius: 10px;
     border: 1.5px solid rgba(96,165,250,0.5);
     background: rgba(37,99,235,0.15); color: var(--white);
@@ -499,63 +540,63 @@
     font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em;
     cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
   }
-  #slide-8 .gen-btn:hover:not(:disabled) {
+  #slide-9 .gen-btn:hover:not(:disabled) {
     background: rgba(37,99,235,0.35); border-color: var(--blue-light);
     box-shadow: 0 0 24px rgba(37,99,235,0.4); transform: scale(1.04);
   }
-  #slide-8 .gen-btn:disabled { opacity: 0.45; cursor: default; transform: none; }
-  #slide-8 .gen-btn.generating { animation: pulse-btn 0.8s ease-in-out infinite; }
+  #slide-9 .gen-btn:disabled { opacity: 0.45; cursor: default; transform: none; }
+  #slide-9 .gen-btn.generating { animation: pulse-btn 0.8s ease-in-out infinite; }
   @keyframes pulse-btn {
     0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
     50%       { box-shadow: 0 0 20px 6px rgba(37,99,235,0.4); }
   }
-  #slide-8 .output-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  #slide-8 .out-img-wrap {
+  #slide-9 .output-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  #slide-9 .out-img-wrap {
     border-radius: 10px; overflow: hidden;
     border: 1px solid rgba(96,165,250,0.15);
     opacity: 0; transform: scale(0.88) translateY(8px);
     transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s;
     cursor: pointer;
   }
-  #slide-8 .out-img-wrap.revealed { opacity: 1; transform: scale(1) translateY(0); }
-  #slide-8 .out-img-wrap:hover { border-color: rgba(96,165,250,0.5); }
-  #slide-8 .out-img-wrap img { width: 100%; height: 135px; object-fit: cover; display: block; }
-  #slide-8 .slide-copy { margin-bottom: 20px; }
+  #slide-9 .out-img-wrap.revealed { opacity: 1; transform: scale(1) translateY(0); }
+  #slide-9 .out-img-wrap:hover { border-color: rgba(96,165,250,0.5); }
+  #slide-9 .out-img-wrap img { width: 100%; height: 135px; object-fit: cover; display: block; }
+  #slide-9 .slide-copy { margin-bottom: 20px; }
 
   /* Slide 8: OmniHuman — video full */
-  #slide-9 { padding: 60px; }
-  #slide-9 .omni-layout {
+  #slide-10 { padding: 60px; }
+  #slide-10 .omni-layout {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 56px; max-width: 1200px; width: 100%; align-items: center;
   }
-  #slide-9 video {
+  #slide-10 video {
     width: 100%; border-radius: 14px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(37,99,235,0.25);
     border: 1px solid rgba(96,165,250,0.25); display: block;
   }
-  #slide-9 .tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-  #slide-9 .feature-tag {
+  #slide-10 .tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  #slide-10 .feature-tag {
     padding: 6px 14px; border-radius: 20px;
     background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
     font-size: 0.82rem; font-weight: 600; color: var(--blue-light);
   }
 
   /* Slide 9: Business Analysis — LIGHT */
-  #slide-10 .analysis-steps {
+  #slide-11 .analysis-steps {
     display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px;
   }
-  #slide-10 .step-card {
+  #slide-11 .step-card {
     padding: 18px 22px; border-radius: 10px;
     border: 1px solid var(--gray-light); background: #F8FAFC;
     display: flex; gap: 14px; align-items: flex-start;
   }
-  #slide-10 .step-num {
+  #slide-11 .step-num {
     font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
     color: var(--blue); background: rgba(37,99,235,0.08);
     border-radius: 6px; padding: 4px 8px; flex-shrink: 0;
   }
-  #slide-10 .step-label { font-size: 0.92rem; font-weight: 600; color: var(--dark); }
-  #slide-10 .ticker {
+  #slide-11 .step-label { font-size: 0.92rem; font-weight: 600; color: var(--dark); }
+  #slide-11 .ticker {
     font-family: monospace; font-size: 0.82rem;
     color: var(--blue); background: rgba(37,99,235,0.05);
     border: 1px solid rgba(37,99,235,0.2); border-radius: 6px;
@@ -564,51 +605,51 @@
   }
 
   /* Slide 10: Social Intelligence */
-  #slide-11 .platform-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-  #slide-11 .platform-badge {
+  #slide-12 .platform-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  #slide-12 .platform-badge {
     padding: 8px 18px; border-radius: 24px;
     border: 1px solid rgba(96,165,250,0.3); background: rgba(37,99,235,0.1);
     font-size: 0.88rem; font-weight: 600; color: var(--blue-light);
     animation: badge-float 3s ease-in-out infinite;
   }
-  #slide-11 .platform-badge:nth-child(2) { animation-delay: 0.3s; }
-  #slide-11 .platform-badge:nth-child(3) { animation-delay: 0.6s; }
-  #slide-11 .platform-badge:nth-child(4) { animation-delay: 0.9s; }
-  #slide-11 .platform-badge:nth-child(5) { animation-delay: 1.2s; }
-  #slide-11 .platform-badge:nth-child(6) { animation-delay: 1.5s; }
+  #slide-12 .platform-badge:nth-child(2) { animation-delay: 0.3s; }
+  #slide-12 .platform-badge:nth-child(3) { animation-delay: 0.6s; }
+  #slide-12 .platform-badge:nth-child(4) { animation-delay: 0.9s; }
+  #slide-12 .platform-badge:nth-child(5) { animation-delay: 1.2s; }
+  #slide-12 .platform-badge:nth-child(6) { animation-delay: 1.5s; }
   @keyframes badge-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-  #slide-11 .wave-container { margin-top: 32px; height: 60px; width: 100%; max-width: 500px; }
-  #slide-11 svg { width: 100%; height: 100%; }
-  #slide-11 .s10-inner { display: flex; flex-direction: column; gap: 0; max-width: 860px; width: 100%; }
-  #slide-11 .s10-video-stripe {
+  #slide-12 .wave-container { margin-top: 32px; height: 60px; width: 100%; max-width: 500px; }
+  #slide-12 svg { width: 100%; height: 100%; }
+  #slide-12 .s10-inner { display: flex; flex-direction: column; gap: 0; max-width: 860px; width: 100%; }
+  #slide-12 .s10-video-stripe {
     width: 100%; height: 150px; border-radius: 12px 12px 0 0;
     overflow: hidden; flex-shrink: 0;
     border: 1px solid rgba(96,165,250,0.2); border-bottom: none;
   }
-  #slide-11 .s10-video-stripe video {
+  #slide-12 .s10-video-stripe video {
     width: 100%; height: 100%; object-fit: cover; display: block;
   }
-  #slide-11 .s10-content {
+  #slide-12 .s10-content {
     border: 1px solid rgba(96,165,250,0.15); border-top: none;
     border-radius: 0 0 12px 12px;
     padding: 32px 36px 36px;
   }
 
   /* Slide 11: How We Work — LIGHT */
-  #slide-12 { align-items: center; justify-content: center; }
-  #slide-12 .s11-inner {
+  #slide-13 { align-items: center; justify-content: center; }
+  #slide-13 .s11-inner {
     max-width: 1100px; width: 100%;
     display: flex; flex-direction: column; align-items: center; gap: 40px;
   }
-  #slide-12 .s11-header { text-align: center; }
-  #slide-12 .s11-header h2 { margin-bottom: 10px; }
-  #slide-12 .s11-header p { font-size: 1rem; color: #475569; }
-  #slide-12 .s11-timeline {
+  #slide-13 .s11-header { text-align: center; }
+  #slide-13 .s11-header h2 { margin-bottom: 10px; }
+  #slide-13 .s11-header p { font-size: 1rem; color: #475569; }
+  #slide-13 .s11-timeline {
     display: grid;
     grid-template-columns: 1fr auto 1fr auto 1fr;
     gap: 0; align-items: stretch; width: 100%;
   }
-  #slide-12 .phase-card {
+  #slide-13 .phase-card {
     padding: 28px 28px 32px;
     border-radius: 14px;
     border: 1.5px solid var(--gray-light);
@@ -617,37 +658,37 @@
     opacity: 0; transform: translateY(16px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
-  #slide-12 .phase-card.visible { opacity: 1; transform: translateY(0); }
-  #slide-12 .phase-card:hover {
+  #slide-13 .phase-card.visible { opacity: 1; transform: translateY(0); }
+  #slide-13 .phase-card:hover {
     border-color: var(--blue);
     box-shadow: 0 12px 32px rgba(37,99,235,0.1);
   }
-  #slide-12 .phase-pill {
+  #slide-13 .phase-pill {
     display: inline-block; width: fit-content;
     padding: 3px 10px; border-radius: 20px;
     font-size: 0.68rem; font-weight: 800; letter-spacing: 0.14em;
     text-transform: uppercase;
     background: rgba(37,99,235,0.1); color: var(--blue);
   }
-  #slide-12 .phase-title {
+  #slide-13 .phase-title {
     font-size: 1.2rem; font-weight: 800; color: var(--dark); line-height: 1.2;
   }
-  #slide-12 .phase-who {
+  #slide-13 .phase-who {
     font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--blue);
     margin-top: 4px;
   }
-  #slide-12 .phase-body {
+  #slide-13 .phase-body {
     font-size: 0.92rem; color: #475569; line-height: 1.65;
   }
-  #slide-12 .phase-arrow {
+  #slide-13 .phase-arrow {
     display: flex; align-items: center; justify-content: center;
     padding: 0 16px; flex-shrink: 0;
     opacity: 0; transform: scaleX(0); transform-origin: left center;
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  #slide-12 .phase-arrow.visible { opacity: 1; transform: scaleX(1); }
-  #slide-12 .phase-arrow svg { color: var(--blue); }
+  #slide-13 .phase-arrow.visible { opacity: 1; transform: scaleX(1); }
+  #slide-13 .phase-arrow svg { color: var(--blue); }
 
   /* ── Display mode (external monitor window) ── */
   .display-mode #nav-bar,
@@ -734,26 +775,26 @@
   #hud-notes-text::placeholder { color: #475569; }
 
   /* ── Slide 12: Two Ways — LIGHT ── */
-  #slide-13 .options-grid {
+  #slide-14 .options-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
     margin-top: 32px; width: 100%;
   }
-  #slide-13 .option-card {
+  #slide-14 .option-card {
     padding: 32px; border-radius: 16px;
     border: 1.5px solid var(--gray-light);
     background: #F8FAFC;
     transition: all 0.3s ease; cursor: default;
   }
-  #slide-13 .option-card:hover {
+  #slide-14 .option-card:hover {
     border-color: var(--blue);
     background: #EFF6FF;
     transform: translateY(-4px);
     box-shadow: 0 16px 40px rgba(37,99,235,0.12);
   }
-  #slide-13 .option-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
-  #slide-13 .option-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--dark); }
-  #slide-13 .option-card p { font-size: 0.92rem; color: #475569; line-height: 1.65; }
-  #slide-13 .option-tag {
+  #slide-14 .option-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+  #slide-14 .option-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--dark); }
+  #slide-14 .option-card p { font-size: 0.92rem; color: #475569; line-height: 1.65; }
+  #slide-14 .option-tag {
     display: inline-block; margin-top: 20px;
     padding: 5px 14px; border-radius: 20px;
     font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
@@ -910,8 +951,37 @@
     </div>
   </div>
 
-  <!-- Slide 5: Two Pillars -->
+  <!-- Slide 6: The Stack -->
   <div class="slide slide-dark" id="slide-6">
+    <div class="stack-wrap">
+      <p class="stack-headline anim-1"><strong>The same architecture that runs TikTok.</strong><br>Now running for you.</p>
+
+      <div class="stack-layer anim-2">
+        <div class="layer-label">Your Business</div>
+        <div class="layer-items">Campaigns · Content · Customer growth</div>
+      </div>
+
+      <div class="stack-layer anim-3">
+        <div class="layer-label">AI Models</div>
+        <div class="layer-items">Seedance · Seedream · OmniHuman · SeedEdit</div>
+      </div>
+
+      <div class="stack-layer anim-4">
+        <div class="layer-label">Customer &amp; Behavioural Intelligence</div>
+        <div class="layer-items">VeCDP · DataFinder · DataWind</div>
+      </div>
+
+      <div class="stack-layer anim-5">
+        <div class="layer-label">ByteDance Infrastructure</div>
+        <div class="layer-items">The engine behind TikTok, CapCut, and Douyin</div>
+      </div>
+
+      <p class="stack-footer anim-6">Built for billions. Available, exclusively, here.</p>
+    </div>
+  </div>
+
+  <!-- Slide 6: Two Pillars -->
+  <div class="slide slide-dark" id="slide-7">
     <div style="max-width:1000px;width:100%;">
       <span class="tag anim-1" style="text-align:center;display:block;">The Capability</span>
       <h2 class="anim-2" style="text-align:center;margin-bottom:44px;">Two things every business needs.</h2>
@@ -929,7 +999,7 @@
   </div>
 
   <!-- Slide 6: CREATE — Video -->
-  <div class="slide slide-dark" id="slide-7">
+  <div class="slide slide-dark" id="slide-8">
     <div class="video-layout">
       <div>
         <span class="tag anim-1">Create / Video</span>
@@ -984,7 +1054,7 @@
   </div>
 
   <!-- Slide 7: CREATE — Image -->
-  <div class="slide slide-dark" id="slide-8">
+  <div class="slide slide-dark" id="slide-9">
     <div style="max-width:1200px;width:100%;">
       <div class="slide-copy">
         <span class="tag anim-1">Create / Image</span>
@@ -1014,7 +1084,7 @@
   </div>
 
   <!-- Slide 8: CREATE — Digital Humans -->
-  <div class="slide slide-dark" id="slide-9">
+  <div class="slide slide-dark" id="slide-10">
     <div class="omni-layout">
       <div>
         <span class="tag anim-1">Create / Digital Humans</span>
@@ -1044,7 +1114,7 @@
   </div>
 
   <!-- Slide 9: UNDERSTAND — Business Analysis — LIGHT -->
-  <div class="slide slide-light" id="slide-10">
+  <div class="slide slide-light" id="slide-11">
     <div class="slide-left" style="max-width:900px;">
       <span class="tag anim-1">Understand / Business Analysis</span>
       <h2 class="anim-2">See your business the<br>way the data sees it.</h2>
@@ -1060,7 +1130,7 @@
   </div>
 
   <!-- Slide 10: UNDERSTAND — Social Intelligence -->
-  <div class="slide slide-dark" id="slide-11">
+  <div class="slide slide-dark" id="slide-12">
     <div class="s10-inner">
       <div class="s10-video-stripe">
         <video autoplay muted loop playsinline id="s11-video">
@@ -1098,7 +1168,7 @@
   </div>
 
   <!-- Slide 11: How We Work — LIGHT -->
-  <div class="slide slide-light" id="slide-12">
+  <div class="slide slide-light" id="slide-13">
     <div class="s11-inner">
       <div class="s11-header anim-1">
         <span class="tag">Partnership</span>
@@ -1144,7 +1214,7 @@
   </div>
 
   <!-- Slide 12: Two Ways to Start — LIGHT -->
-  <div class="slide slide-light" id="slide-13">
+  <div class="slide slide-light" id="slide-14">
     <div style="max-width:960px;width:100%;">
       <span class="tag anim-1" style="text-align:center;display:block;">Get Started</span>
       <h2 class="anim-2" style="text-align:center;">Two ways to start.</h2>
@@ -1174,14 +1244,15 @@
   <div class="menu-item" onclick="menuGoTo(3)"><span class="menu-num">03</span><span class="menu-title">Who We Are</span></div>
   <div class="menu-item" onclick="menuGoTo(4)"><span class="menu-num">04</span><span class="menu-title">Data Advantage</span></div>
   <div class="menu-item" onclick="menuGoTo(5)"><span class="menu-num">05</span><span class="menu-title">Exclusivity</span></div>
-  <div class="menu-item" onclick="menuGoTo(6)"><span class="menu-num">06</span><span class="menu-title">Two Pillars</span></div>
-  <div class="menu-item" onclick="menuGoTo(7)"><span class="menu-num">07</span><span class="menu-title">Video</span></div>
-  <div class="menu-item" onclick="menuGoTo(8)"><span class="menu-num">08</span><span class="menu-title">Image</span></div>
-  <div class="menu-item" onclick="menuGoTo(9)"><span class="menu-num">09</span><span class="menu-title">Digital Humans</span></div>
-  <div class="menu-item" onclick="menuGoTo(10)"><span class="menu-num">10</span><span class="menu-title">Business Analysis</span></div>
-  <div class="menu-item" onclick="menuGoTo(11)"><span class="menu-num">11</span><span class="menu-title">Social Intel</span></div>
-  <div class="menu-item" onclick="menuGoTo(12)"><span class="menu-num">12</span><span class="menu-title">Partnership</span></div>
-  <div class="menu-item" onclick="menuGoTo(13)"><span class="menu-num">13</span><span class="menu-title">Get Started</span></div>
+  <div class="menu-item" onclick="menuGoTo(6)"><span class="menu-num">06</span><span class="menu-title">The Stack</span></div>
+  <div class="menu-item" onclick="menuGoTo(7)"><span class="menu-num">07</span><span class="menu-title">Two Pillars</span></div>
+  <div class="menu-item" onclick="menuGoTo(8)"><span class="menu-num">08</span><span class="menu-title">Video</span></div>
+  <div class="menu-item" onclick="menuGoTo(9)"><span class="menu-num">09</span><span class="menu-title">Image</span></div>
+  <div class="menu-item" onclick="menuGoTo(10)"><span class="menu-num">10</span><span class="menu-title">Digital Humans</span></div>
+  <div class="menu-item" onclick="menuGoTo(11)"><span class="menu-num">11</span><span class="menu-title">Business Analysis</span></div>
+  <div class="menu-item" onclick="menuGoTo(12)"><span class="menu-num">12</span><span class="menu-title">Social Intel</span></div>
+  <div class="menu-item" onclick="menuGoTo(13)"><span class="menu-num">13</span><span class="menu-title">Partnership</span></div>
+  <div class="menu-item" onclick="menuGoTo(14)"><span class="menu-num">14</span><span class="menu-title">Get Started</span></div>
 </div>
 
 <div id="nav-bar">
@@ -1202,7 +1273,7 @@
 </div>
 
 <script>
-const TOTAL = 13;
+const TOTAL = 14;
 let current = 1;
 let animating = false;
 
@@ -1212,7 +1283,7 @@ const counter = document.getElementById('slide-counter');
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
 
-const lightSlides = new Set([5, 10, 12, 13]);
+const lightSlides = new Set([5, 11, 13, 14]);
 
 function goTo(next, dir = 1) {
   if (animating || next < 1 || next > TOTAL || next === current) return;
@@ -1245,13 +1316,13 @@ function updateUI() {
 function onSlideEnter(n) {
   if (n === 2) { const v = document.getElementById('s2-bg-video'); if (v) v.play(); }
   if (n === 5) { const v = document.getElementById('s5-bg-video'); if (v) v.play(); }
-  if (n === 7) s6SelectCategory('creative');
+  if (n === 8) s6SelectCategory('creative');
   if (n === 3) animateStat();
   if (n === 4) animateS4Canvas();
-  if (n === 8) resetSlide7();
-  if (n === 10) animateTicker();
-  if (n === 11) { animateWave(); const v = document.getElementById('s11-video'); if (v) v.play(); }
-  if (n === 12) animatePhases();
+  if (n === 9) resetSlide7();
+  if (n === 11) animateTicker();
+  if (n === 12) { animateWave(); const v = document.getElementById('s11-video'); if (v) v.play(); }
+  if (n === 13) animatePhases();
 }
 
 // ── Modal ──
@@ -1276,8 +1347,8 @@ document.getElementById('modal').addEventListener('click', function(e) {
 
 // ── Slide 6 category tabs ──
 function s6SelectCategory(cat) {
-  document.querySelectorAll('#slide-7 .s6-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
-  document.querySelectorAll('#slide-7 .s6-panel').forEach(p => p.classList.toggle('active', p.id === 's6-panel-' + cat));
+  document.querySelectorAll('#slide-8 .s6-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
+  document.querySelectorAll('#slide-8 .s6-panel').forEach(p => p.classList.toggle('active', p.id === 's6-panel-' + cat));
 }
 
 // ── Slide 7 ──
@@ -1620,9 +1691,9 @@ updateUI(); onSlideEnter(1);
 // ── Presenter / Display mode ──
 const SLIDE_TITLES = {
   1:'Cover', 2:'Problem', 3:'Who We Are', 4:'Data Advantage',
-  5:'Exclusivity', 6:'Two Pillars', 7:'Video', 8:'Image',
-  9:'Digital Humans', 10:'Business Analysis', 11:'Social Intelligence',
-  12:'Partnership', 13:'Get Started'
+  5:'Exclusivity', 6:'The Stack', 7:'Two Pillars', 8:'Video', 9:'Image',
+  10:'Digital Humans', 11:'Business Analysis', 12:'Social Intelligence',
+  13:'Partnership', 14:'Get Started'
 };
 const SLIDE_NOTES = {
   1: 'Open with the bold claim. Let silence land after "ByteDance AI Stack in Thailand."',
@@ -1630,14 +1701,15 @@ const SLIDE_NOTES = {
   3: 'Keep it brief. This is credibility, not a company history.',
   4: 'Emphasise the moat: data exclusivity from ByteDance partnership.',
   5: 'This is the headline differentiator — slow down.',
-  6: 'Two pillars = two revenue streams. Keep energy high.',
-  7: 'Let the video speak. Narrate only if questions arise.',
-  8: 'Walk through the image-gen examples. Invite reactions.',
-  9: 'Digital humans demo moment — most visual wow.',
-  10: "Business analysis ROI story. Know the client's industry before this slide.",
-  11: 'Social intelligence — if client is e-commerce, double down here.',
-  12: 'Partnership tiers slide. Have pricing sheet ready.',
-  13: 'Call to action. Ask for the pilot commitment today.',
+  6: 'The architecture slide — show the full stack. Let the weight of it land before moving on.',
+  7: 'Two pillars = two revenue streams. Keep energy high.',
+  8: 'Let the video speak. Narrate only if questions arise.',
+  9: 'Walk through the image-gen examples. Invite reactions.',
+  10: 'Digital humans demo moment — most visual wow.',
+  11: "Business analysis ROI story. Know the client's industry before this slide.",
+  12: 'Social intelligence — if client is e-commerce, double down here.',
+  13: 'Partnership tiers slide. Have pricing sheet ready.',
+  14: 'Call to action. Ask for the pilot commitment today.',
 };
 
 const _params = new URLSearchParams(location.search);
