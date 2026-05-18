@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Basicware AI — The ByteDance AI Stack in Thailand</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -659,7 +660,7 @@
     z-index: 200;
     display: none;
     flex-direction: column; gap: 10px;
-    width: 256px;
+    width: 512px;
   }
   #presenter-hud.active { display: flex; }
   .hud-panel {
@@ -704,7 +705,7 @@
   }
   #hud-thumb {
     width: 1280px; height: 720px;
-    transform: scale(0.2); transform-origin: top left;
+    transform: scale(0.4); transform-origin: top left;
     border: none; pointer-events: none;
     position: absolute; top: 0; left: 0; display: block;
   }
@@ -718,6 +719,19 @@
     transition: all 0.2s ease;
   }
   #hud-end:hover { border-color: rgba(239,68,68,0.5); color: #F87171; }
+  .hud-notes-panel { margin-top: 0; }
+  .hud-notes-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--blue-light); margin-bottom: 6px;
+  }
+  #hud-notes-text {
+    width: 100%; min-height: 80px; max-height: 160px;
+    background: transparent; border: none; outline: none; resize: vertical;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem; line-height: 1.5; color: #cbd5e1;
+    padding: 0;
+  }
+  #hud-notes-text::placeholder { color: #475569; }
 
   /* ── Slide 12: Two Ways — LIGHT ── */
   #slide-13 .options-grid {
@@ -766,6 +780,10 @@
     </div>
     <div id="hud-next-num" style="margin-top:8px;"></div>
     <div id="hud-next-title">—</div>
+  </div>
+  <div class="hud-panel hud-notes-panel">
+    <div class="hud-notes-label">Speaker Notes</div>
+    <textarea id="hud-notes-text" placeholder="Add notes for this slide…" spellcheck="false"></textarea>
   </div>
   <button id="hud-end" onclick="endPresenterMode()">End Presentation</button>
 </div>
@@ -1605,6 +1623,21 @@ const SLIDE_TITLES = {
   9:'Digital Humans', 10:'Business Analysis', 11:'Social Intelligence',
   12:'Partnership', 13:'Get Started'
 };
+const SLIDE_NOTES = {
+  1: 'Open with the bold claim. Let silence land after "ByteDance AI Stack in Thailand."',
+  2: 'Pain point slide — pause here, let the client nod.',
+  3: 'Keep it brief. This is credibility, not a company history.',
+  4: 'Emphasise the moat: data exclusivity from ByteDance partnership.',
+  5: 'This is the headline differentiator — slow down.',
+  6: 'Two pillars = two revenue streams. Keep energy high.',
+  7: 'Let the video speak. Narrate only if questions arise.',
+  8: 'Walk through the image-gen examples. Invite reactions.',
+  9: 'Digital humans demo moment — most visual wow.',
+  10: "Business analysis ROI story. Know the client's industry before this slide.",
+  11: 'Social intelligence — if client is e-commerce, double down here.',
+  12: 'Partnership tiers slide. Have pricing sheet ready.',
+  13: 'Call to action. Ask for the pilot commitment today.',
+};
 
 const _params = new URLSearchParams(location.search);
 const isDisplay = _params.has('display');
@@ -1679,7 +1712,16 @@ if (isThumb) {
     if (thumbFrame && next) {
       thumbFrame.contentWindow?.postMessage({ type: 'thumb-goto', n: next }, '*');
     }
+    const notesEl = document.getElementById('hud-notes-text');
+    if (notesEl) {
+      const saved = localStorage.getItem(`basicware-notes-${current}`);
+      notesEl.value = saved !== null ? saved : (SLIDE_NOTES[current] || '');
+    }
   }
+
+  document.getElementById('hud-notes-text').addEventListener('input', () => {
+    localStorage.setItem(`basicware-notes-${current}`, document.getElementById('hud-notes-text').value);
+  });
 
   function tickTimer() {
     const elapsed = Math.floor((Date.now() - timerStart) / 1000);
