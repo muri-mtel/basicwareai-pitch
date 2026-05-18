@@ -87,6 +87,54 @@
     min-width: 52px; text-align: center;
   }
 
+  /* ── Slide menu ── */
+  #slide-menu {
+    position: fixed; bottom: 80px; left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    z-index: 99;
+    background: rgba(10,16,40,0.92);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: 16px;
+    padding: 16px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    min-width: 300px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  #slide-menu.open {
+    opacity: 1; pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+  }
+  .menu-item {
+    display: flex; flex-direction: column;
+    align-items: flex-start; gap: 2px;
+    padding: 8px 10px; border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+  }
+  .menu-item:hover {
+    background: rgba(37,99,235,0.18);
+    border-color: rgba(96,165,250,0.3);
+  }
+  .menu-item.current {
+    background: rgba(37,99,235,0.25);
+    border-color: rgba(96,165,250,0.5);
+  }
+  .menu-num {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+    color: var(--blue-light); text-transform: uppercase;
+  }
+  .menu-title {
+    font-size: 10px; font-weight: 600;
+    color: var(--white); line-height: 1.3;
+  }
+  .menu-item:not(.current) .menu-title { color: var(--gray); }
+
   /* ── Particle canvas ── */
   #particle-canvas {
     position: fixed; inset: 0;
@@ -620,15 +668,14 @@
   #slide-13 .option-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
   #slide-13 .option-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--dark); }
   #slide-13 .option-card p { font-size: 0.92rem; color: #475569; line-height: 1.65; }
-  #slide-13 .cta-btn {
-    display: inline-block; margin-top: 20px; padding: 10px 22px;
-    border-radius: 8px; font-size: 0.875rem; font-weight: 700;
-    cursor: pointer; transition: all 0.2s ease; border: none;
-    letter-spacing: 0.03em; font-family: 'Plus Jakarta Sans', sans-serif;
-    background: linear-gradient(135deg, var(--blue), var(--blue-mid));
-    color: var(--white); box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  #slide-13 .option-tag {
+    display: inline-block; margin-top: 20px;
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue); background: rgba(37,99,235,0.08);
+    border: 1px solid rgba(37,99,235,0.25);
   }
-  #slide-13 .cta-btn:hover { box-shadow: 0 6px 24px rgba(37,99,235,0.5); transform: translateY(-2px); }
 </style>
 </head>
 <body>
@@ -1000,13 +1047,13 @@
           <span class="option-icon">🔍</span>
           <h3>The Intelligence Report</h3>
           <p>We profile your customers, your competitors, and your market. What's working in your category. What isn't. Where the opportunity is. A report you can act on, built on signals most agencies can't see.</p>
-          <button class="cta-btn">Request Report →</button>
+          <span class="option-tag">Request Report</span>
         </div>
         <div class="option-card anim-4">
           <span class="option-icon">🎯</span>
           <h3>The Problem Statement</h3>
           <p>You tell us what's slowing your business down. We find — or build — the AI that fixes it. No brief template. No procurement form. Just a conversation.</p>
-          <button class="cta-btn">Start a Conversation →</button>
+          <span class="option-tag">Start a Conversation</span>
         </div>
       </div>
     </div>
@@ -1014,8 +1061,31 @@
 
 </div><!-- /deck -->
 
+<!-- Slide menu popup -->
+<div id="slide-menu">
+  <div class="menu-item" onclick="menuGoTo(1)"><span class="menu-num">01</span><span class="menu-title">Cover</span></div>
+  <div class="menu-item" onclick="menuGoTo(2)"><span class="menu-num">02</span><span class="menu-title">Problem</span></div>
+  <div class="menu-item" onclick="menuGoTo(3)"><span class="menu-num">03</span><span class="menu-title">Who We Are</span></div>
+  <div class="menu-item" onclick="menuGoTo(4)"><span class="menu-num">04</span><span class="menu-title">Data Advantage</span></div>
+  <div class="menu-item" onclick="menuGoTo(5)"><span class="menu-num">05</span><span class="menu-title">Exclusivity</span></div>
+  <div class="menu-item" onclick="menuGoTo(6)"><span class="menu-num">06</span><span class="menu-title">Two Pillars</span></div>
+  <div class="menu-item" onclick="menuGoTo(7)"><span class="menu-num">07</span><span class="menu-title">Video</span></div>
+  <div class="menu-item" onclick="menuGoTo(8)"><span class="menu-num">08</span><span class="menu-title">Image</span></div>
+  <div class="menu-item" onclick="menuGoTo(9)"><span class="menu-num">09</span><span class="menu-title">Digital Humans</span></div>
+  <div class="menu-item" onclick="menuGoTo(10)"><span class="menu-num">10</span><span class="menu-title">Business Analysis</span></div>
+  <div class="menu-item" onclick="menuGoTo(11)"><span class="menu-num">11</span><span class="menu-title">Social Intel</span></div>
+  <div class="menu-item" onclick="menuGoTo(12)"><span class="menu-num">12</span><span class="menu-title">Partnership</span></div>
+  <div class="menu-item" onclick="menuGoTo(13)"><span class="menu-num">13</span><span class="menu-title">Get Started</span></div>
+</div>
+
 <div id="nav-bar">
   <button class="nav-btn" id="btn-prev" disabled>&#8592;</button>
+  <button class="nav-btn" id="btn-menu" title="All slides" onclick="toggleMenu()" style="font-size:13px;">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+      <rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/>
+      <rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/>
+    </svg>
+  </button>
   <span id="slide-counter">1 / 13</span>
   <button class="nav-btn" id="btn-next">&#8594;</button>
 </div>
@@ -1352,11 +1422,39 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
     return;
   }
+  if (e.key === 'Escape' && menuOpen) { closeMenu(); return; }
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
   if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
 });
 btnNext.addEventListener('click', goNext);
 btnPrev.addEventListener('click', goPrev);
+
+// ── Slide menu ──
+const slideMenu = document.getElementById('slide-menu');
+const menuItems = slideMenu.querySelectorAll('.menu-item');
+let menuOpen = false;
+
+function updateMenuHighlight() {
+  menuItems.forEach((item, i) => item.classList.toggle('current', i + 1 === current));
+}
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  slideMenu.classList.toggle('open', menuOpen);
+  if (menuOpen) updateMenuHighlight();
+}
+function closeMenu() {
+  menuOpen = false;
+  slideMenu.classList.remove('open');
+}
+function menuGoTo(n) {
+  closeMenu();
+  if (n === current) return;
+  goTo(n, n > current ? 1 : -1);
+}
+document.addEventListener('click', e => {
+  if (!menuOpen) return;
+  if (!slideMenu.contains(e.target) && e.target.id !== 'btn-menu') closeMenu();
+});
 
 // ── Particle canvas ──
 const canvas = document.getElementById('particle-canvas');
