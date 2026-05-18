@@ -1533,8 +1533,9 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
     return;
   }
+  if (isDisplay) return;
   if (e.key === 'Escape' && menuOpen) { closeMenu(); return; }
-  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
   if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
 });
 btnNext.addEventListener('click', goNext);
@@ -1671,6 +1672,8 @@ if (isThumb) {
       if (diff > 0) for (let i = 0; i < diff; i++) s4Advance();
       else for (let i = 0; i < -diff; i++) s4Retreat();
     }
+    if (data.type === 'videoOpen') openVideoModal(data.src);
+    if (data.type === 'videoClose') closeModal();
   };
   channel.postMessage({ type: 'ready' });
 
@@ -1694,6 +1697,12 @@ if (isThumb) {
   s4Advance = function() { _s4Advance(); if (presenterActive) channel.postMessage({ type: 's4', step: s4Step }); };
   const _s4Retreat = s4Retreat;
   s4Retreat = function() { _s4Retreat(); if (presenterActive) channel.postMessage({ type: 's4', step: s4Step }); };
+
+  // Patch openVideoModal / closeModal to mirror on display window
+  const _openVideoModal = openVideoModal;
+  openVideoModal = function(src) { _openVideoModal(src); if (presenterActive) channel.postMessage({ type: 'videoOpen', src }); };
+  const _closeModal = closeModal;
+  closeModal = function() { _closeModal(); if (presenterActive) channel.postMessage({ type: 'videoClose' }); };
 
   // HUD elements
   const hud = document.getElementById('presenter-hud');
