@@ -401,56 +401,79 @@
     background: rgba(234,88,12,0.07);
   }
 
-  /* Slide 6: The Stack */
+  /* Slide 6: Comparison */
   #slide-6 { background: transparent; }
-  #slide-6 .stack-wrap {
-    max-width: 720px; width: 100%;
-    display: flex; flex-direction: column; gap: 0;
+  #slide-6 .compare-wrap {
+    max-width: 940px; width: 100%;
+    display: flex; flex-direction: column; align-items: center; gap: 36px;
   }
-  #slide-6 .stack-headline {
-    text-align: center; margin-bottom: 40px; line-height: 1.1;
+  #slide-6 .compare-cols {
+    display: grid; grid-template-columns: 1fr 1.65fr;
+    gap: 36px; width: 100%; align-items: start;
   }
-  #slide-6 .stack-headline strong {
-    display: block;
-    font-size: clamp(2rem, 3.6vw, 3rem); font-weight: 800;
-    letter-spacing: -0.025em;
+  #slide-6 .col-head {
+    margin-bottom: 10px;
+  }
+  #slide-6 .col-title {
+    font-size: clamp(1.3rem, 2.2vw, 1.9rem); font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  #slide-6 .col-left .col-title { color: rgba(255,255,255,0.32); }
+  #slide-6 .col-right .col-title {
     background: linear-gradient(120deg, var(--white) 40%, var(--blue-light) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  #slide-6 .stack-headline span {
-    display: block; margin-top: 10px;
-    font-size: clamp(0.9rem, 1.3vw, 1.05rem); font-weight: 500;
-    letter-spacing: 0.04em; color: var(--gray);
+  #slide-6 .col-sublabel {
+    display: block; margin-top: 5px;
+    font-size: 8px; font-weight: 800; letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
+  #slide-6 .col-left .col-sublabel { color: rgba(255,255,255,0.2); }
+  #slide-6 .col-right .col-sublabel { color: var(--blue-light); }
+  /* Left: thin ghost box */
+  #slide-6 .generic-box {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    height: 155px;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 20px 26px; gap: 8px;
+  }
+  #slide-6 .generic-line {
+    font-size: clamp(0.82rem, 1.1vw, 0.95rem); font-weight: 400;
+    color: rgba(255,255,255,0.22); line-height: 1.5;
+  }
+  /* Right: layered stack */
+  #slide-6 .stack-col { display: flex; flex-direction: column; }
   #slide-6 .stack-layer {
-    border: 1px solid rgba(96,165,250,0.22);
-    border-radius: 0; padding: 22px 32px;
-    display: flex; flex-direction: column; gap: 6px;
-    position: relative;
-    transition: border-color 0.3s;
+    padding: 16px 24px;
+    display: flex; flex-direction: column; gap: 5px;
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: 0;
   }
-  #slide-6 .stack-layer:first-of-type { border-radius: 14px 14px 0 0; }
-  #slide-6 .stack-layer:last-of-type  { border-radius: 0 0 14px 14px; }
+  #slide-6 .stack-layer:first-child { border-radius: 12px 12px 0 0; }
+  #slide-6 .stack-layer:last-child  { border-radius: 0 0 12px 12px; }
   #slide-6 .stack-layer + .stack-layer { border-top: none; }
+  /* darkest at bottom (infrastructure = depth), lightest at top (your business = opportunity) */
+  #slide-6 .stack-layer:nth-child(1) { background: rgba(37,99,235,0.06); box-shadow: inset 0 -1px 0 rgba(96,165,250,0.06); }
+  #slide-6 .stack-layer:nth-child(2) { background: rgba(37,99,235,0.10); box-shadow: inset 0 -1px 0 rgba(96,165,250,0.08); }
+  #slide-6 .stack-layer:nth-child(3) { background: rgba(37,99,235,0.15); box-shadow: inset 0 -1px 0 rgba(96,165,250,0.10); }
+  #slide-6 .stack-layer:nth-child(4) { background: rgba(37,99,235,0.22); box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
   #slide-6 .layer-label {
-    font-size: 9px; font-weight: 800; letter-spacing: 0.22em;
+    font-size: 8px; font-weight: 800; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--blue-light);
   }
   #slide-6 .layer-items {
-    font-size: clamp(0.82rem, 1.05vw, 0.95rem); font-weight: 500;
-    color: rgba(255,255,255,0.55); line-height: 1.5;
+    font-size: clamp(0.8rem, 1vw, 0.9rem); font-weight: 500;
+    color: rgba(255,255,255,0.6); line-height: 1.55;
   }
-  /* gradient: darkest bottom, lightest top */
-  #slide-6 .stack-layer:nth-child(1) { background: rgba(37,99,235,0.13); }
-  #slide-6 .stack-layer:nth-child(2) { background: rgba(37,99,235,0.09); }
-  #slide-6 .stack-layer:nth-child(3) { background: rgba(37,99,235,0.05); }
-  #slide-6 .stack-layer:nth-child(4) { background: rgba(37,99,235,0.02); }
-  #slide-6 .stack-footer {
-    text-align: center; margin-top: 28px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
-    text-transform: uppercase; color: rgba(96,165,250,0.55);
+  #slide-6 .compare-tagline {
+    text-align: center;
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem); font-weight: 500;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.01em;
   }
+  #slide-6 .compare-tagline strong { color: var(--white); font-weight: 700; }
 
   /* Slide 5: Two Pillars */
   #slide-7 .pillar-card {
@@ -993,35 +1016,55 @@
     </div>
   </div>
 
-  <!-- Slide 6: The Stack -->
+  <!-- Slide 6: Comparison -->
   <div class="slide slide-dark" id="slide-6">
-    <div class="stack-wrap">
-      <div class="stack-headline anim-1">
-        <strong>The same architecture<br>that runs TikTok.</strong>
-        <span>Now running for you.</span>
+    <div class="compare-wrap">
+
+      <div class="compare-cols anim-1">
+
+        <!-- Left: Generic AI -->
+        <div class="col-left">
+          <div class="col-head">
+            <div class="col-title">Everyone else's AI.</div>
+            <span class="col-sublabel">Generic AI</span>
+          </div>
+          <div class="generic-box">
+            <div class="generic-line">Off-the-shelf AI.</div>
+            <div class="generic-line">A single model.</div>
+            <div class="generic-line">Behind a chat box.</div>
+          </div>
+        </div>
+
+        <!-- Right: BytePlus stack -->
+        <div class="col-right">
+          <div class="col-head">
+            <div class="col-title">Yours.</div>
+            <span class="col-sublabel">BytePlus — via Basicware AI TH</span>
+          </div>
+          <div class="stack-col">
+            <div class="stack-layer">
+              <div class="layer-label">Your Business</div>
+              <div class="layer-items">Campaigns · Content · Customer growth</div>
+            </div>
+            <div class="stack-layer">
+              <div class="layer-label">AI Models</div>
+              <div class="layer-items">Seedance · Seedream · OmniHuman · SeedEdit</div>
+            </div>
+            <div class="stack-layer">
+              <div class="layer-label">Customer Intelligence</div>
+              <div class="layer-items">VeCDP · DataFinder · DataWind</div>
+            </div>
+            <div class="stack-layer">
+              <div class="layer-label">ByteDance Infrastructure</div>
+              <div class="layer-items">The engine behind TikTok, CapCut, and Douyin</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="stack-layer anim-2">
-        <div class="layer-label">Your Business</div>
-        <div class="layer-items">Campaigns · Content · Customer growth</div>
-      </div>
+      <p class="compare-tagline anim-2"><strong>Same price range.</strong> A different universe of capability.</p>
 
-      <div class="stack-layer anim-3">
-        <div class="layer-label">AI Models</div>
-        <div class="layer-items">Seedance · Seedream · OmniHuman · SeedEdit</div>
-      </div>
-
-      <div class="stack-layer anim-4">
-        <div class="layer-label">Customer &amp; Behavioural Intelligence</div>
-        <div class="layer-items">VeCDP · DataFinder · DataWind</div>
-      </div>
-
-      <div class="stack-layer anim-5">
-        <div class="layer-label">ByteDance Infrastructure</div>
-        <div class="layer-items">The engine behind TikTok, CapCut, and Douyin</div>
-      </div>
-
-      <p class="stack-footer anim-6">Built for billions. Available, exclusively, here.</p>
     </div>
   </div>
 
