@@ -648,7 +648,78 @@
   #slide-12 .phase-arrow.visible { opacity: 1; transform: scaleX(1); }
   #slide-12 .phase-arrow svg { color: var(--blue); }
 
-  /* Slide 12: Two Ways — LIGHT */
+  /* ── Display mode (external monitor window) ── */
+  .display-mode #nav-bar,
+  .display-mode #slide-menu,
+  .display-mode #progress-bar { display: none !important; }
+
+  /* ── Presenter HUD ── */
+  #presenter-hud {
+    position: fixed; top: 20px; right: 24px;
+    z-index: 200;
+    display: none;
+    flex-direction: column; gap: 10px;
+    width: 256px;
+  }
+  #presenter-hud.active { display: flex; }
+  .hud-panel {
+    background: rgba(10,16,40,0.88);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .hud-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .hud-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #475569; flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .hud-dot.connected { background: #34D399; box-shadow: 0 0 6px #34D399; }
+  #hud-timer {
+    font-size: 1.5rem; font-weight: 800; letter-spacing: 0.04em;
+    color: var(--white); margin-top: 4px; font-variant-numeric: tabular-nums;
+  }
+  .hud-next-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--blue-light); margin-bottom: 6px;
+  }
+  #hud-next-num {
+    font-size: 0.7rem; font-weight: 800; color: var(--gray);
+  }
+  #hud-next-title {
+    font-size: 0.92rem; font-weight: 700; color: var(--white);
+    line-height: 1.3; margin-top: 2px;
+  }
+  .hud-thumb-wrap {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 6px; overflow: hidden;
+    background: var(--dark);
+    position: relative; flex-shrink: 0;
+    border: 1px solid rgba(96,165,250,0.15);
+  }
+  #hud-thumb {
+    width: 1280px; height: 720px;
+    transform: scale(0.2); transform-origin: top left;
+    border: none; pointer-events: none;
+    position: absolute; top: 0; left: 0; display: block;
+  }
+  #hud-end {
+    width: 100%; padding: 7px 0;
+    border-radius: 8px; border: 1px solid rgba(96,165,250,0.25);
+    background: transparent; color: var(--gray);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  #hud-end:hover { border-color: rgba(239,68,68,0.5); color: #F87171; }
+
+  /* ── Slide 12: Two Ways — LIGHT ── */
   #slide-13 .options-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
     margin-top: 32px; width: 100%;
@@ -681,6 +752,23 @@
 <body>
 
 <div id="progress-bar"></div>
+
+<!-- Presenter HUD -->
+<div id="presenter-hud">
+  <div class="hud-panel">
+    <div class="hud-row"><span class="hud-dot" id="hud-dot"></span><span id="hud-status">Connecting…</span></div>
+    <div id="hud-timer">00:00</div>
+  </div>
+  <div class="hud-panel">
+    <div class="hud-next-label">Next →</div>
+    <div class="hud-thumb-wrap">
+      <iframe id="hud-thumb" src="?thumb" scrolling="no" frameborder="0" tabindex="-1"></iframe>
+    </div>
+    <div id="hud-next-num" style="margin-top:8px;"></div>
+    <div id="hud-next-title">—</div>
+  </div>
+  <button id="hud-end" onclick="endPresenterMode()">End Presentation</button>
+</div>
 <img id="logo" src="assets/logo.png" alt="Basicware AI">
 <canvas id="particle-canvas"></canvas>
 <div id="cursor-glow"></div>
@@ -1080,6 +1168,11 @@
 
 <div id="nav-bar">
   <button class="nav-btn" id="btn-prev" disabled>&#8592;</button>
+  <button class="nav-btn" id="btn-present" title="Presenter mode" onclick="startPresenterMode()" style="font-size:13px;">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+    </svg>
+  </button>
   <button class="nav-btn" id="btn-menu" title="All slides" onclick="toggleMenu()" style="font-size:13px;">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
       <rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/>
@@ -1504,6 +1597,158 @@ function drawParticles() {
 initParticles(); drawParticles();
 getSlide(1).classList.add('active');
 updateUI(); onSlideEnter(1);
+
+// ── Presenter / Display mode ──
+const SLIDE_TITLES = {
+  1:'Cover', 2:'Problem', 3:'Who We Are', 4:'Data Advantage',
+  5:'Exclusivity', 6:'Two Pillars', 7:'Video', 8:'Image',
+  9:'Digital Humans', 10:'Business Analysis', 11:'Social Intelligence',
+  12:'Partnership', 13:'Get Started'
+};
+
+const _params = new URLSearchParams(location.search);
+const isDisplay = _params.has('display');
+const isThumb = _params.has('thumb');
+const channel = new BroadcastChannel('basicware-deck');
+
+if (isThumb) {
+  // ── Thumbnail iframe (rendered inside presenter HUD) ──
+  document.body.classList.add('display-mode');
+  window.addEventListener('message', ({ data }) => {
+    if (data.type !== 'thumb-goto') return;
+    const n = data.n;
+    if (n < 1 || n > TOTAL) return;
+    document.querySelectorAll('.slide').forEach(s => {
+      s.classList.remove('active', 'exit-left');
+      s.style.transform = '';
+    });
+    const s = getSlide(n);
+    if (s) { s.classList.add('active'); current = n; updateUI(); }
+  });
+
+} else if (isDisplay) {
+  // ── Display window ──
+  document.body.classList.add('display-mode');
+  document.documentElement.requestFullscreen?.().catch(() => {});
+
+  channel.onmessage = ({ data }) => {
+    if (data.type === 'goto') goTo(data.n, data.dir);
+    if (data.type === 's4' && current === 4) {
+      const diff = data.step - s4Step;
+      if (diff > 0) for (let i = 0; i < diff; i++) s4Advance();
+      else for (let i = 0; i < -diff; i++) s4Retreat();
+    }
+  };
+  channel.postMessage({ type: 'ready' });
+
+} else {
+  // ── Presenter (controller) window ──
+  let presenterActive = false;
+  let displayWin = null;
+  let timerStart = null;
+  let timerIv = null;
+
+  // Patch goTo to broadcast (only when navigation will actually proceed)
+  const _goTo = goTo;
+  goTo = function(next, dir = 1) {
+    if (presenterActive && !animating && next >= 1 && next <= TOTAL && next !== current)
+      channel.postMessage({ type: 'goto', n: next, dir });
+    _goTo(next, dir);
+  };
+
+  // Patch s4Advance / s4Retreat to broadcast step
+  const _s4Advance = s4Advance;
+  s4Advance = function() { _s4Advance(); if (presenterActive) channel.postMessage({ type: 's4', step: s4Step }); };
+  const _s4Retreat = s4Retreat;
+  s4Retreat = function() { _s4Retreat(); if (presenterActive) channel.postMessage({ type: 's4', step: s4Step }); };
+
+  // HUD elements
+  const hud = document.getElementById('presenter-hud');
+  const hudDot = document.getElementById('hud-dot');
+  const hudStatus = document.getElementById('hud-status');
+  const hudTimer = document.getElementById('hud-timer');
+  const hudNextNum = document.getElementById('hud-next-num');
+  const hudNextTitle = document.getElementById('hud-next-title');
+
+  function updateHUD() {
+    if (!presenterActive) return;
+    const next = current < TOTAL ? current + 1 : null;
+    hudNextNum.textContent = next ? `Slide ${next} of ${TOTAL}` : '';
+    hudNextTitle.textContent = next ? SLIDE_TITLES[next] : 'Last slide';
+    const thumbFrame = document.getElementById('hud-thumb');
+    if (thumbFrame && next) {
+      thumbFrame.contentWindow?.postMessage({ type: 'thumb-goto', n: next }, '*');
+    }
+  }
+
+  function tickTimer() {
+    const elapsed = Math.floor((Date.now() - timerStart) / 1000);
+    const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
+    const s = String(elapsed % 60).padStart(2, '0');
+    hudTimer.textContent = `${m}:${s}`;
+  }
+
+  channel.onmessage = ({ data }) => {
+    if (data.type === 'ready') {
+      hudDot.classList.add('connected');
+      hudStatus.textContent = 'Connected';
+    }
+  };
+
+  async function startPresenterMode() {
+    if (presenterActive) { displayWin?.focus(); return; }
+
+    let features = '';
+    if (window.getScreenDetails) {
+      try {
+        const sd = await window.getScreenDetails();
+        const ext = sd.screens.find(s => !s.isPrimary) || sd.screens[sd.currentScreen === sd.screens[0] ? 1 : 0];
+        if (ext) features = `left=${ext.left},top=${ext.top},width=${ext.width},height=${ext.height}`;
+      } catch (_) {}
+    }
+
+    displayWin = window.open('?display', '_blank', features || 'width=1280,height=720');
+    presenterActive = true;
+    hud.classList.add('active');
+    timerStart = Date.now();
+    timerIv = setInterval(tickTimer, 1000);
+    tickTimer();
+    updateHUD();
+
+    // Re-sync current slide to display window after it loads
+    setTimeout(() => channel.postMessage({ type: 'goto', n: current, dir: 1 }), 1200);
+
+    // Send initial thumb after iframe is ready
+    const thumbFrame = document.getElementById('hud-thumb');
+    if (thumbFrame) {
+      const onThumbLoad = () => { updateHUD(); thumbFrame.removeEventListener('load', onThumbLoad); };
+      thumbFrame.addEventListener('load', onThumbLoad);
+    }
+
+    // Watch for display window being closed externally
+    const watchClose = setInterval(() => {
+      if (displayWin?.closed) { endPresenterMode(); clearInterval(watchClose); }
+    }, 1000);
+  }
+
+  function endPresenterMode() {
+    presenterActive = false;
+    hud.classList.remove('active');
+    clearInterval(timerIv);
+    hudDot.classList.remove('connected');
+    hudStatus.textContent = 'Connecting…';
+    if (displayWin && !displayWin.closed) displayWin.close();
+    displayWin = null;
+  }
+
+  // Expose for HTML onclick
+  window.startPresenterMode = startPresenterMode;
+  window.endPresenterMode = endPresenterMode;
+
+  // Update HUD on every slide change
+  const _updateUI = updateUI;
+  updateUI = function() { _updateUI(); updateHUD(); };
+}
 </script>
 </body>
 </html>
