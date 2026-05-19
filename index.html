@@ -735,66 +735,103 @@
   }
 
   /* Slide 10: Social Intelligence */
-  #slide-12 .platform-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-  #slide-12 .platform-badge {
-    padding: 8px 18px; border-radius: 24px;
-    border: 1px solid rgba(96,165,250,0.3); background: rgba(37,99,235,0.1);
-    font-size: 0.88rem; font-weight: 600; color: var(--blue-light);
-    animation: badge-float 3s ease-in-out infinite;
+  #slide-12 .si-wrap {
+    max-width: 980px; width: 100%;
+    display: flex; flex-direction: column; gap: 24px;
   }
-  #slide-12 .platform-badge:nth-child(2) { animation-delay: 0.3s; }
-  #slide-12 .platform-badge:nth-child(3) { animation-delay: 0.6s; }
-  #slide-12 .platform-badge:nth-child(4) { animation-delay: 0.9s; }
-  #slide-12 .platform-badge:nth-child(5) { animation-delay: 1.2s; }
-  #slide-12 .platform-badge:nth-child(6) { animation-delay: 1.5s; }
-  @keyframes badge-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-  #slide-12 .loop-bar {
-    display: flex; align-items: center; gap: 0;
-    margin-top: 24px; max-width: 500px;
+  #slide-12 .si-header {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
   }
-  #slide-12 .loop-step {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    flex: 1;
+  #slide-12 .si-header h2 { margin-bottom: 10px; }
+  #slide-12 .si-header p {
+    font-size: clamp(0.9rem, 1.2vw, 1rem); color: var(--gray);
+    max-width: 480px; line-height: 1.65;
   }
-  #slide-12 .loop-label {
+  #slide-12 .si-live-badge {
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding-top: 8px;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.22em; color: #4ade80;
+  }
+  #slide-12 .si-live-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: #22c55e;
+    animation: live-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+    60% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+  }
+  #slide-12 .si-body {
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px;
+  }
+  #slide-12 .si-panel {
+    border: 1px solid rgba(96,165,250,0.14); border-radius: 14px; overflow: hidden;
+  }
+  #slide-12 .si-panel-label {
+    font-size: 8px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); padding: 11px 16px;
+    border-bottom: 1px solid rgba(96,165,250,0.1);
+    background: rgba(255,255,255,0.02);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #slide-12 .si-updated-tag {
+    color: #4ade80; opacity: 0; transition: opacity 0.3s;
+  }
+  #slide-12 .si-feed { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 190px; }
+  #slide-12 .si-signal {
+    border: 1px solid rgba(96,165,250,0.15); border-radius: 10px;
+    padding: 11px 14px; background: rgba(37,99,235,0.04);
+    transition: opacity 0.5s ease, transform 0.4s ease;
+  }
+  #slide-12 .si-signal--new { opacity: 0; transform: translateY(-10px); }
+  #slide-12 .si-signal--old { opacity: 0.35; }
+  #slide-12 .si-signal-top {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 7px;
+  }
+  #slide-12 .si-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  }
+  #slide-12 .si-plat-name {
+    font-size: 0.78rem; font-weight: 700; color: var(--white); flex: 1;
+  }
+  #slide-12 .si-time {
+    font-size: 0.67rem; color: rgba(255,255,255,0.3); font-variant-numeric: tabular-nums;
+  }
+  #slide-12 .si-chip {
+    font-size: 0.66rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+  }
+  #slide-12 .si-pos  { background: rgba(34,197,94,0.14);  color: #4ade80; }
+  #slide-12 .si-neg  { background: rgba(239,68,68,0.14);  color: #f87171; }
+  #slide-12 .si-warn { background: rgba(251,146,60,0.14); color: #fb923c; }
+  #slide-12 .si-signal-text {
+    font-size: 0.84rem; color: rgba(255,255,255,0.6); line-height: 1.45; font-style: italic;
+  }
+  /* Brief panel */
+  #slide-12 .si-brief-field {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px; border-bottom: 1px solid rgba(96,165,250,0.08);
+    transition: background 0.35s ease;
+  }
+  #slide-12 .si-brief-field:last-child { border-bottom: none; }
+  #slide-12 .si-brief-field.si-flash { background: rgba(96,165,250,0.1); }
+  #slide-12 .si-brief-key {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: rgba(255,255,255,0.35);
+  }
+  #slide-12 .si-brief-val {
+    font-size: 0.9rem; font-weight: 600; color: var(--white);
+    text-align: right; transition: color 0.35s ease;
+  }
+  #slide-12 .si-brief-field.si-flash .si-brief-val { color: var(--blue-light); }
+  /* Bottom strip */
+  #slide-12 .si-strip {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  #slide-12 .si-strip-label {
     font-size: 8px; font-weight: 800; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--blue-light);
+    text-transform: uppercase; color: rgba(255,255,255,0.25); margin-right: 4px;
   }
-  #slide-12 .loop-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--blue-light);
-    box-shadow: 0 0 8px rgba(96,165,250,0.7);
-    animation: loop-pulse 2s ease-in-out infinite;
-  }
-  #slide-12 .loop-step:nth-child(3) .loop-dot { animation-delay: 0.5s; }
-  #slide-12 .loop-step:nth-child(5) .loop-dot { animation-delay: 1s; }
-  #slide-12 .loop-step:nth-child(7) .loop-dot { animation-delay: 1.5s; }
-  @keyframes loop-pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
-  #slide-12 .loop-arrow {
-    flex: 0.5; height: 1px;
-    background: linear-gradient(90deg, rgba(96,165,250,0.4), rgba(96,165,250,0.15));
-    position: relative; top: 6px;
-  }
-  #slide-12 .loop-arrow::after {
-    content: ''; position: absolute; right: -1px; top: -3px;
-    border: 3px solid transparent;
-    border-left: 5px solid rgba(96,165,250,0.4);
-  }
-  #slide-12 .wave-container { margin-top: 32px; height: 60px; width: 100%; max-width: 500px; }
-  #slide-12 svg { width: 100%; height: 100%; }
-  #slide-12 .s10-inner { display: flex; flex-direction: column; gap: 0; max-width: 860px; width: 100%; }
-  #slide-12 .s10-video-stripe {
-    width: 100%; height: 150px; border-radius: 12px 12px 0 0;
-    overflow: hidden; flex-shrink: 0;
-    border: 1px solid rgba(96,165,250,0.2); border-bottom: none;
-  }
-  #slide-12 .s10-video-stripe video {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-  }
-  #slide-12 .s10-content {
-    border: 1px solid rgba(96,165,250,0.15); border-top: none;
-    border-radius: 0 0 12px 12px;
-    padding: 32px 36px 36px;
+  #slide-12 .si-plat {
+    font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.3);
+    padding: 3px 11px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
   }
 
   /* Slide 11: How We Work — LIGHT */
@@ -1426,48 +1463,66 @@
 
   <!-- Slide 10: UNDERSTAND — Social Intelligence -->
   <div class="slide slide-dark" id="slide-12">
-    <div class="s10-inner">
-      <div class="s10-video-stripe">
-        <video autoplay muted loop playsinline id="s11-video">
-          <source src="assets/08-optimized.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="s10-content">
-        <div class="slide-left" style="max-width:860px;">
-          <span class="tag anim-1">Understand / Social Intelligence</span>
-          <h2 class="anim-2">Know what the market feels —<br>before it shows up in sales.</h2>
-          <p class="anim-3" style="margin-top:16px;max-width:580px;">Real-time sentiment across every major platform. <strong>Not a quarterly report — a live loop.</strong> When trends shift, your brief updates. When a competitor moves, you see it before your next post goes out.</p>
-          <div class="platform-grid anim-4">
-            <span class="platform-badge">TikTok</span>
-            <span class="platform-badge">Facebook</span>
-            <span class="platform-badge">Instagram</span>
-            <span class="platform-badge">X / Twitter</span>
-            <span class="platform-badge">Line</span>
-            <span class="platform-badge">WeChat</span>
-          </div>
-          <div class="loop-bar anim-5">
-            <div class="loop-step"><span class="loop-label">Detect</span><div class="loop-dot"></div></div>
-            <div class="loop-arrow"></div>
-            <div class="loop-step"><span class="loop-label">Analyse</span><div class="loop-dot"></div></div>
-            <div class="loop-arrow"></div>
-            <div class="loop-step"><span class="loop-label">Adapt</span><div class="loop-dot"></div></div>
-            <div class="loop-arrow"></div>
-            <div class="loop-step"><span class="loop-label">Repeat</span><div class="loop-dot"></div></div>
-          </div>
-          <div class="wave-container anim-6">
-            <svg viewBox="0 0 500 60" preserveAspectRatio="none">
-              <path id="wave-path" fill="none" stroke="url(#waveGrad)" stroke-width="2"/>
-              <defs>
-                <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style="stop-color:#2563EB;stop-opacity:0.3"/>
-                  <stop offset="50%" style="stop-color:#60A5FA;stop-opacity:1"/>
-                  <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0.3"/>
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
+    <div class="si-wrap">
+
+      <!-- Header -->
+      <div class="si-header anim-1">
+        <div>
+          <span class="tag">Understand / Social Intelligence</span>
+          <h2>The market speaks.<br>Your brief listens.</h2>
+          <p>Social signals from every platform, processed continuously. When sentiment shifts or a competitor moves, your strategy adapts — not next quarter. Now.</p>
+        </div>
+        <div class="si-live-badge anim-1">
+          <div class="si-live-dot"></div>LIVE
         </div>
       </div>
+
+      <!-- Dashboard -->
+      <div class="si-body anim-2">
+
+        <!-- Left: live signal feed -->
+        <div class="si-panel">
+          <div class="si-panel-label">Signal Feed</div>
+          <div class="si-feed" id="si-feed"></div>
+        </div>
+
+        <!-- Right: campaign brief -->
+        <div class="si-panel">
+          <div class="si-panel-label">
+            Campaign Brief
+            <span class="si-updated-tag" id="si-updated-tag">● Updated</span>
+          </div>
+          <div class="si-brief-field" id="bf-tone">
+            <span class="si-brief-key">Tone</span>
+            <span class="si-brief-val" id="bfv-tone">—</span>
+          </div>
+          <div class="si-brief-field" id="bf-format">
+            <span class="si-brief-key">Format</span>
+            <span class="si-brief-val" id="bfv-format">—</span>
+          </div>
+          <div class="si-brief-field" id="bf-hook">
+            <span class="si-brief-key">Hook</span>
+            <span class="si-brief-val" id="bfv-hook">—</span>
+          </div>
+          <div class="si-brief-field" id="bf-focus">
+            <span class="si-brief-key">Focus</span>
+            <span class="si-brief-val" id="bfv-focus">—</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Platform strip -->
+      <div class="si-strip anim-3">
+        <span class="si-strip-label">Listening on</span>
+        <span class="si-plat">TikTok</span>
+        <span class="si-plat">Instagram</span>
+        <span class="si-plat">Facebook</span>
+        <span class="si-plat">X / Twitter</span>
+        <span class="si-plat">Line</span>
+        <span class="si-plat">WeChat</span>
+      </div>
+
     </div>
   </div>
 
@@ -1677,7 +1732,7 @@ function onSlideEnter(n) {
   if (n === 4) animateS4Canvas();
   if (n === 9) resetSlide7();
   if (n === 11) { animateTicker(); initDASlide(); }
-  if (n === 12) { animateWave(); const v = document.getElementById('s11-video'); if (v) v.play(); }
+  if (n === 12) initS12();
   if (n === 13) animatePhases();
 }
 
@@ -1897,6 +1952,79 @@ const tickerLines = [
   "SELECT brand, sentiment_score FROM social_signals ORDER BY date DESC"
 ];
 let tickerIdx = 0, tickerIv = null;
+// ── Slide 12: Social Intelligence live feed ──
+const s12Signals = [
+  { plat: 'TikTok',    color: '#ff2d55', chip: '+ Trending',  chipCls: 'si-pos',  text: '"#NaturalSkincare spiking — 2.8M views in 48 hours"',           field: 'tone',   val: 'Authentic & raw' },
+  { plat: 'Twitter',   color: '#1d9bf0', chip: '− Weakness',  chipCls: 'si-neg',  text: '"Competitor ad feels too polished — comment section turning"',   field: 'hook',   val: 'Lead with real people' },
+  { plat: 'Instagram', color: '#e1306c', chip: '+ Surge',     chipCls: 'si-pos',  text: '"Morning routine content 3× above category avg this week"',     field: 'format', val: 'Short-form, morning' },
+  { plat: 'Facebook',  color: '#1877f2', chip: '! Shift',     chipCls: 'si-warn', text: '"Price sensitivity rising — promotions outperforming brand posts"', field: 'focus',  val: 'Value & savings' },
+  { plat: 'Line',      color: '#06c755', chip: '+ High CTR',  chipCls: 'si-pos',  text: '"Bangkok micro-creators driving highest CTR in category"',       field: 'tone',   val: 'Local & personal' },
+  { plat: 'Instagram', color: '#e1306c', chip: '+ Breakout',  chipCls: 'si-pos',  text: '"Behind-the-scenes format up 180% engagement vs polished ads"',  field: 'format', val: 'Behind-the-scenes' },
+  { plat: 'TikTok',    color: '#ff2d55', chip: '! Alert',     chipCls: 'si-warn', text: '"Competitor just launched — tracking their early sentiment now"',  field: 'hook',   val: 'Contrast & differentiate' },
+];
+const s12Ages = ['just now', '2m ago', '5m ago'];
+let s12Iv = null, s12Idx = 0;
+
+function initS12() {
+  clearInterval(s12Iv);
+  s12Idx = 0;
+  const feed = document.getElementById('si-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+  ['tone','format','hook','focus'].forEach(k => {
+    const v = document.getElementById('bfv-' + k);
+    const f = document.getElementById('bf-' + k);
+    if (v) v.textContent = '—';
+    if (f) f.classList.remove('si-flash');
+  });
+  const tag = document.getElementById('si-updated-tag');
+  if (tag) tag.style.opacity = '0';
+  setTimeout(s12Tick, 900);
+  s12Iv = setInterval(s12Tick, 2900);
+}
+
+function s12Tick() {
+  const feed = document.getElementById('si-feed');
+  if (!feed) { clearInterval(s12Iv); return; }
+  const sig = s12Signals[s12Idx % s12Signals.length];
+  s12Idx++;
+
+  // Age existing cards
+  [...feed.querySelectorAll('.si-signal')].forEach((el, i) => {
+    const ts = el.querySelector('.si-time');
+    if (ts) ts.textContent = s12Ages[i + 1] || '8m ago';
+    if (i >= 2) { el.remove(); return; }
+    el.classList.toggle('si-signal--old', i === 1);
+  });
+
+  // New card
+  const card = document.createElement('div');
+  card.className = 'si-signal si-signal--new';
+  card.innerHTML = `<div class="si-signal-top">
+    <span class="si-dot" style="background:${sig.color}"></span>
+    <span class="si-plat-name">${sig.plat}</span>
+    <span class="si-time">just now</span>
+    <span class="si-chip ${sig.chipCls}">${sig.chip}</span>
+  </div>
+  <div class="si-signal-text">${sig.text}</div>`;
+  feed.prepend(card);
+  requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove('si-signal--new')));
+
+  // Update brief field
+  const bfVal = document.getElementById('bfv-' + sig.field);
+  const bfRow = document.getElementById('bf-' + sig.field);
+  const tag   = document.getElementById('si-updated-tag');
+  if (bfVal) bfVal.textContent = sig.val;
+  if (bfRow) {
+    bfRow.classList.add('si-flash');
+    setTimeout(() => bfRow.classList.remove('si-flash'), 1600);
+  }
+  if (tag) {
+    tag.style.opacity = '1';
+    setTimeout(() => { tag.style.opacity = '0'; }, 1600);
+  }
+}
+
 // ── Slide 11: Data Agent interactive demo ──
 let daState = 'idle';
 
