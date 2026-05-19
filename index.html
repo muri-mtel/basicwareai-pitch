@@ -2331,6 +2331,7 @@ const SLIDE_NOTES = {
 const _params = new URLSearchParams(location.search);
 const isDisplay = _params.has('display');
 const isThumb = _params.has('thumb');
+const isPresenterMode = _params.has('presenter');
 const channel = new BroadcastChannel('basicware-deck');
 
 if (isThumb) {
@@ -2365,7 +2366,7 @@ if (isThumb) {
   };
   channel.postMessage({ type: 'ready' });
 
-} else {
+} else if (isPresenterMode) {
   // ── Presenter (controller) window ──
   let presenterActive = false;
   let displayWin = null;
@@ -2487,6 +2488,13 @@ if (isThumb) {
   // Update HUD on every slide change
   const _updateUI = updateUI;
   updateUI = function() { _updateUI(); updateHUD(); };
+
+} else {
+  // ── Client (audience) view — no presenter controls ──
+  const btnPresent = document.getElementById('btn-present');
+  const presenterHud = document.getElementById('presenter-hud');
+  if (btnPresent) btnPresent.style.display = 'none';
+  if (presenterHud) presenterHud.style.display = 'none';
 }
 </script>
 </body>
