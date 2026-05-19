@@ -405,7 +405,7 @@
   #slide-6 { background: transparent; }
   #slide-6 .compare-wrap {
     max-width: 940px; width: 100%;
-    display: flex; flex-direction: column; align-items: center; gap: 36px;
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
   }
   #slide-6 .compare-cols {
     display: grid; grid-template-columns: 1fr 1.65fr;
@@ -467,6 +467,14 @@
   #slide-6 .layer-items {
     font-size: clamp(0.8rem, 1vw, 0.9rem); font-weight: 500;
     color: rgba(255,255,255,0.6); line-height: 1.55;
+  }
+  #slide-6 .compare-headline {
+    text-align: center;
+    font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1.15;
+    background: linear-gradient(120deg, var(--white) 50%, var(--blue-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   #slide-6 .compare-tagline {
     text-align: center;
@@ -1227,7 +1235,9 @@
   <div class="slide slide-dark" id="slide-6">
     <div class="compare-wrap">
 
-      <div class="compare-cols anim-1">
+      <h2 class="compare-headline anim-1">The same stack used by BytePlus,<br>available to you.</h2>
+
+      <div class="compare-cols anim-2">
 
         <!-- Left: Generic AI -->
         <div class="col-left">
@@ -1270,7 +1280,7 @@
 
       </div>
 
-      <p class="compare-tagline anim-2"><strong>Same price range.</strong> A different universe of capability.</p>
+      <p class="compare-tagline anim-3"><strong>Same price range.</strong> A different universe of capability.</p>
 
     </div>
   </div>
