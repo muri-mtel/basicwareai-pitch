@@ -616,8 +616,8 @@
 
   /* Slide 9: Business Analysis — LIGHT */
   #slide-11 .da-layout {
-    display: grid; grid-template-columns: 1fr 28px 1.15fr;
-    gap: 16px; align-items: center; margin-top: 28px; width: 100%;
+    display: grid; grid-template-columns: 1fr 36px 1.2fr;
+    gap: 16px; align-items: start; margin-top: 28px; width: 100%;
   }
   #slide-11 .da-box-label {
     font-size: 8px; font-weight: 800; letter-spacing: 0.2em;
@@ -628,22 +628,57 @@
     background: #fff; border: 1.5px solid rgba(37,99,235,0.3);
     border-radius: 12px; padding: 18px 22px;
     box-shadow: 0 2px 12px rgba(37,99,235,0.07);
+    cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
   }
+  #slide-11 .da-prompt-box:hover { border-color: rgba(37,99,235,0.6); box-shadow: 0 4px 20px rgba(37,99,235,0.12); }
+  #slide-11 .da-prompt-box.da-typing { cursor: default; }
   #slide-11 .da-prompt-text {
-    font-size: clamp(0.88rem, 1.1vw, 1rem); color: var(--dark);
-    font-style: italic; line-height: 1.55; font-weight: 400;
+    font-size: clamp(0.85rem, 1.05vw, 0.96rem); color: var(--dark);
+    font-style: italic; line-height: 1.6; font-weight: 400; min-height: 3.2em;
   }
+  #slide-11 .da-placeholder { color: rgba(37,99,235,0.38); }
   #slide-11 .da-cursor {
     display: inline-block; width: 2px; height: 0.9em;
     background: var(--blue); vertical-align: text-bottom; margin-left: 2px;
     animation: blink 1s step-end infinite;
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  #slide-11 .da-generate-btn {
+    display: block; width: 100%; margin-top: 16px;
+    padding: 10px 20px; border-radius: 8px;
+    background: var(--blue); color: #fff;
+    font-size: 0.84rem; font-weight: 700; letter-spacing: 0.03em;
+    border: none; cursor: pointer;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, background 0.25s ease, transform 0.15s ease;
+  }
+  #slide-11 .da-generate-btn:hover:not(:disabled) { transform: translateY(-1px); background: #1D4ED8; }
+  #slide-11 .da-generate-btn.da-visible { opacity: 1; pointer-events: all; }
+  #slide-11 .da-generate-btn.da-loading { background: #94A3B8; cursor: default; pointer-events: none; }
+  #slide-11 .da-generate-btn.da-done { background: #16A34A; cursor: default; pointer-events: none; }
+  /* Arrow */
   #slide-11 .da-arrow-col {
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem; color: rgba(37,99,235,0.35); padding-top: 22px;
+    font-size: 1.2rem; color: rgba(37,99,235,0.35);
+    padding-top: 46px;
   }
+  /* Report wrap — page depth */
+  #slide-11 .da-report-wrap {
+    position: relative;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  #slide-11 .da-report-wrap.da-visible { opacity: 1; transform: none; pointer-events: all; }
+  #slide-11 .da-page {
+    position: absolute; inset: 0;
+    background: #fff; border: 1px solid #E2E8F0; border-radius: 12px;
+    pointer-events: none;
+  }
+  #slide-11 .da-page-3 { transform: translate(9px, 11px); z-index: 0; opacity: 0.45; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+  #slide-11 .da-page-2 { transform: translate(5px, 6px);  z-index: 1; opacity: 0.7;  box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
   #slide-11 .da-report-box {
+    position: relative; z-index: 2;
     background: #fff; border: 1px solid #E2E8F0;
     border-radius: 12px; padding: 18px 22px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -654,18 +689,49 @@
     background: var(--blue); border-radius: 4px; padding: 2px 7px;
     margin-left: 6px; vertical-align: middle;
   }
+  /* Chart */
+  #slide-11 .da-chart {
+    margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #F1F5F9;
+  }
+  #slide-11 .da-chart-title {
+    font-size: 7px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+  }
+  #slide-11 .da-bar-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  }
+  #slide-11 .da-bar-row:last-child { margin-bottom: 0; }
+  #slide-11 .da-bar-label {
+    font-size: 0.67rem; font-weight: 600; color: #94A3B8; width: 26px; flex-shrink: 0;
+  }
+  #slide-11 .da-bar-track {
+    flex: 1; height: 16px; background: #F1F5F9; border-radius: 4px; overflow: hidden;
+  }
+  #slide-11 .da-bar {
+    height: 100%; width: 0;
+    background: rgba(37,99,235,0.22); border-radius: 4px;
+    transition: width 0.85s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; justify-content: flex-end;
+  }
+  #slide-11 .da-bar--alert { background: rgba(220,38,38,0.2); }
+  #slide-11 .da-bar span {
+    font-size: 0.64rem; font-weight: 800; color: #2563EB;
+    padding: 0 6px; opacity: 0; transition: opacity 0.3s ease; white-space: nowrap;
+  }
+  #slide-11 .da-bar--alert span { color: #DC2626; }
+  /* Findings */
   #slide-11 .da-finding {
     display: flex; gap: 12px; align-items: flex-start;
     padding: 9px 0; border-bottom: 1px solid #F1F5F9;
   }
   #slide-11 .da-finding:last-child { border-bottom: none; padding-bottom: 0; }
   #slide-11 .da-finding-num {
-    font-size: 0.75rem; font-weight: 800; color: var(--blue);
+    font-size: 0.72rem; font-weight: 800; color: var(--blue);
     background: rgba(37,99,235,0.08); border-radius: 6px;
     padding: 3px 8px; flex-shrink: 0; white-space: nowrap;
   }
   #slide-11 .da-finding-text {
-    font-size: clamp(0.8rem, 1vw, 0.88rem); color: #475569; line-height: 1.5;
+    font-size: clamp(0.78rem, 0.95vw, 0.86rem); color: #475569; line-height: 1.5;
   }
 
   /* Slide 10: Social Intelligence */
@@ -1238,28 +1304,57 @@
       <span class="tag anim-1">Understand / Business Analysis</span>
       <h2 class="anim-2">Ask a question.<br>Get a full report.</h2>
       <p class="anim-3" style="margin-top:14px;max-width:560px;">Plain language in. Structured analysis out. BytePlus's <strong>Data Agent</strong> writes its own queries, runs the analysis, and delivers recommendations — automatically.</p>
+
       <div class="da-layout anim-4">
 
-        <div class="da-prompt-box">
+        <!-- LEFT: prompt input -->
+        <div class="da-prompt-box" id="da-prompt-box" onclick="daHandlePromptClick()">
           <div class="da-box-label">Your question</div>
-          <div class="da-prompt-text">"Why did our Bangkok conversion rate drop 18% in April — and what should we fix first?"<span class="da-cursor"></span></div>
+          <div class="da-prompt-text" id="da-prompt-text"><span class="da-placeholder" id="da-placeholder">Click to ask a question…</span><span class="da-cursor" id="da-cursor"></span></div>
+          <button class="da-generate-btn" id="da-generate-btn" onclick="event.stopPropagation(); daHandleGenerate()">Generate report →</button>
         </div>
 
         <div class="da-arrow-col">→</div>
 
-        <div class="da-report-box">
-          <div class="da-box-label">Your report <span class="da-report-badge">Auto-generated</span></div>
-          <div class="da-finding">
-            <span class="da-finding-num">↓ 18%</span>
-            <span class="da-finding-text">Mobile checkout abandonment — page load exceeds 3.1s at peak hours</span>
-          </div>
-          <div class="da-finding">
-            <span class="da-finding-num">Fix #1</span>
-            <span class="da-finding-text">Compress product images on mobile checkout → estimated +21% recovery</span>
-          </div>
-          <div class="da-finding">
-            <span class="da-finding-num">Alert</span>
-            <span class="da-finding-text">Competitor gained share during same window — pricing gap of ฿120 detected</span>
+        <!-- RIGHT: report with stacked page depth -->
+        <div class="da-report-wrap" id="da-report-wrap">
+          <div class="da-page da-page-3"></div>
+          <div class="da-page da-page-2"></div>
+          <div class="da-report-box">
+            <div class="da-box-label">Your report <span class="da-report-badge">Auto-generated</span></div>
+
+            <div class="da-chart">
+              <div class="da-chart-title">Conversion Rate · Bangkok</div>
+              <div class="da-bar-row">
+                <span class="da-bar-label">Jan</span>
+                <div class="da-bar-track"><div class="da-bar" id="da-bar-jan"><span>8.2%</span></div></div>
+              </div>
+              <div class="da-bar-row">
+                <span class="da-bar-label">Feb</span>
+                <div class="da-bar-track"><div class="da-bar" id="da-bar-feb"><span>9.1%</span></div></div>
+              </div>
+              <div class="da-bar-row">
+                <span class="da-bar-label">Mar</span>
+                <div class="da-bar-track"><div class="da-bar" id="da-bar-mar"><span>8.8%</span></div></div>
+              </div>
+              <div class="da-bar-row">
+                <span class="da-bar-label">Apr</span>
+                <div class="da-bar-track"><div class="da-bar da-bar--alert" id="da-bar-apr"><span>4.6%</span></div></div>
+              </div>
+            </div>
+
+            <div class="da-finding">
+              <span class="da-finding-num">↓ 18%</span>
+              <span class="da-finding-text">Mobile checkout abandonment — page load exceeds 3.1s at peak hours</span>
+            </div>
+            <div class="da-finding">
+              <span class="da-finding-num">Fix #1</span>
+              <span class="da-finding-text">Compress product images on mobile checkout → estimated +21% recovery</span>
+            </div>
+            <div class="da-finding">
+              <span class="da-finding-num">Alert</span>
+              <span class="da-finding-text">Competitor gained share during same window — pricing gap of ฿120 detected</span>
+            </div>
           </div>
         </div>
 
@@ -1467,7 +1562,7 @@ function onSlideEnter(n) {
   if (n === 3) animateStat();
   if (n === 4) animateS4Canvas();
   if (n === 9) resetSlide7();
-  if (n === 11) animateTicker();
+  if (n === 11) { animateTicker(); initDASlide(); }
   if (n === 12) { animateWave(); const v = document.getElementById('s11-video'); if (v) v.play(); }
   if (n === 13) animatePhases();
 }
@@ -1688,6 +1783,99 @@ const tickerLines = [
   "SELECT brand, sentiment_score FROM social_signals ORDER BY date DESC"
 ];
 let tickerIdx = 0, tickerIv = null;
+// ── Slide 11: Data Agent interactive demo ──
+let daState = 'idle';
+
+function initDASlide() {
+  daState = 'idle';
+  const promptEl  = document.getElementById('da-prompt-text');
+  const cursor    = document.getElementById('da-cursor');
+  const placeholder = document.getElementById('da-placeholder');
+  const btn       = document.getElementById('da-generate-btn');
+  const reportWrap = document.getElementById('da-report-wrap');
+  const promptBox = document.getElementById('da-prompt-box');
+  if (!promptEl) return;
+
+  // Clear any typed text nodes (keep cursor and placeholder spans)
+  [...promptEl.childNodes].forEach(n => {
+    if (n !== cursor && n !== placeholder) n.remove();
+  });
+  promptEl.insertBefore(placeholder, cursor);
+  placeholder.style.opacity = '1';
+
+  btn.classList.remove('da-visible', 'da-loading', 'da-done');
+  btn.textContent = 'Generate report →';
+  reportWrap.classList.remove('da-visible');
+  promptBox.classList.remove('da-typing');
+
+  document.querySelectorAll('#slide-11 .da-bar').forEach(b => { b.style.width = '0'; });
+  document.querySelectorAll('#slide-11 .da-bar span').forEach(s => { s.style.opacity = '0'; });
+}
+
+function daHandlePromptClick() {
+  if (daState !== 'idle') return;
+  daState = 'typing';
+
+  const promptEl    = document.getElementById('da-prompt-text');
+  const cursor      = document.getElementById('da-cursor');
+  const placeholder = document.getElementById('da-placeholder');
+  const promptBox   = document.getElementById('da-prompt-box');
+
+  promptBox.classList.add('da-typing');
+  placeholder.style.opacity = '0';
+  setTimeout(() => placeholder.remove(), 300);
+
+  const text = '"Why did our Bangkok conversion rate drop 18% in April — and what should we fix first?"';
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      promptEl.insertBefore(document.createTextNode(text[i++]), cursor);
+      setTimeout(type, 30 + Math.random() * 25);
+    } else {
+      daState = 'ready';
+      const btn = document.getElementById('da-generate-btn');
+      btn.classList.add('da-visible');
+    }
+  }
+  type();
+}
+
+function daHandleGenerate() {
+  if (daState !== 'ready') return;
+  daState = 'generating';
+
+  const btn = document.getElementById('da-generate-btn');
+  btn.classList.add('da-loading');
+  btn.textContent = 'Analysing data…';
+
+  setTimeout(() => {
+    daState = 'done';
+    btn.classList.remove('da-loading');
+    btn.classList.add('da-done');
+    btn.textContent = 'Report ready ✓';
+
+    document.getElementById('da-report-wrap').classList.add('da-visible');
+
+    const bars = [
+      { id: 'da-bar-jan', pct: 82 },
+      { id: 'da-bar-feb', pct: 91 },
+      { id: 'da-bar-mar', pct: 88 },
+      { id: 'da-bar-apr', pct: 46 },
+    ];
+    bars.forEach(({ id, pct }, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.width = pct + '%';
+        setTimeout(() => { const s = el.querySelector('span'); if (s) s.style.opacity = '1'; }, 750);
+      }, 300 + i * 130);
+    });
+  }, 1600);
+}
+
+window.daHandlePromptClick = daHandlePromptClick;
+window.daHandleGenerate = daHandleGenerate;
+
 function animateTicker() {
   const el = document.getElementById('sql-ticker');
   if (!el) return;
