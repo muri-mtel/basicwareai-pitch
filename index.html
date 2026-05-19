@@ -964,6 +964,68 @@
     color: var(--blue); background: rgba(37,99,235,0.08);
     border: 1px solid rgba(37,99,235,0.25);
   }
+
+  /* Slide 15: Pricing */
+  #slide-15 .pricing-wrap {
+    max-width: 960px; width: 100%;
+    display: flex; flex-direction: column; align-items: center; gap: 48px;
+  }
+  #slide-15 .pricing-head { text-align: center; }
+  #slide-15 .pricing-head h2 {
+    font-size: clamp(2rem, 3.8vw, 3.2rem); font-weight: 800;
+    letter-spacing: -0.025em; line-height: 1.1;
+    background: linear-gradient(120deg, var(--white) 40%, var(--blue-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  #slide-15 .pricing-head p {
+    margin-top: 14px; font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+    color: var(--gray); max-width: 560px; margin-left: auto; margin-right: auto;
+    line-height: 1.7;
+  }
+  #slide-15 .factors-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%;
+  }
+  #slide-15 .factor-card {
+    border: 1px solid rgba(96,165,250,0.18);
+    border-radius: 14px; padding: 22px 24px;
+    background: rgba(37,99,235,0.04);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  #slide-15 .factor-card:hover {
+    border-color: rgba(96,165,250,0.4); background: rgba(37,99,235,0.08);
+  }
+  #slide-15 .factor-name {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--blue-light); margin-bottom: 8px;
+  }
+  #slide-15 .factor-desc {
+    font-size: clamp(0.82rem, 1vw, 0.9rem); color: rgba(255,255,255,0.55);
+    line-height: 1.5; margin-bottom: 16px;
+  }
+  #slide-15 .factor-track {
+    height: 3px; background: rgba(96,165,250,0.12); border-radius: 2px; position: relative;
+  }
+  #slide-15 .factor-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--blue-light);
+    box-shadow: 0 0 8px rgba(96,165,250,0.6);
+    position: absolute; top: -3px;
+    transition: left 0.6s ease;
+  }
+  #slide-15 .factor-track::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(96,165,250,0.3), transparent);
+    border-radius: 2px;
+  }
+  #slide-15 .pricing-footer {
+    text-align: center; border-top: 1px solid rgba(96,165,250,0.15);
+    padding-top: 28px; width: 100%;
+  }
+  #slide-15 .pricing-footer p {
+    font-size: clamp(1rem, 1.5vw, 1.2rem); font-weight: 600;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.01em;
+  }
+  #slide-15 .pricing-footer strong { color: var(--white); }
 </style>
 </head>
 <body>
@@ -1477,6 +1539,57 @@
     </div>
   </div>
 
+
+  <!-- Slide 15: Pricing -->
+  <div class="slide slide-dark" id="slide-15">
+    <div class="pricing-wrap">
+
+      <div class="pricing-head anim-1">
+        <span class="tag" style="text-align:center;display:block;">Pricing</span>
+        <h2>We don't quote.<br>We scope.</h2>
+        <p>There's no catalogue price. What we build commercially depends on who you are, what you're trying to achieve, and how fast you want to get there. We talk. We scope. We agree.</p>
+      </div>
+
+      <div class="factors-grid">
+        <div class="factor-card anim-2">
+          <div class="factor-name">Scale</div>
+          <div class="factor-desc">Number of users, campaigns, and active touchpoints</div>
+          <div class="factor-track"><div class="factor-dot" style="left:38%"></div></div>
+        </div>
+        <div class="factor-card anim-2">
+          <div class="factor-name">Scope</div>
+          <div class="factor-desc">Which BytePlus products are active in your stack</div>
+          <div class="factor-track"><div class="factor-dot" style="left:62%"></div></div>
+        </div>
+        <div class="factor-card anim-3">
+          <div class="factor-name">Industry</div>
+          <div class="factor-desc">Your vertical, competitive landscape, and use case</div>
+          <div class="factor-track"><div class="factor-dot" style="left:28%"></div></div>
+        </div>
+        <div class="factor-card anim-3">
+          <div class="factor-name">Volume</div>
+          <div class="factor-desc">Monthly content and data analysis output requirements</div>
+          <div class="factor-track"><div class="factor-dot" style="left:55%"></div></div>
+        </div>
+        <div class="factor-card anim-4">
+          <div class="factor-name">Timeline</div>
+          <div class="factor-desc">Launch horizon, milestones, and speed to first results</div>
+          <div class="factor-track"><div class="factor-dot" style="left:72%"></div></div>
+        </div>
+        <div class="factor-card anim-4">
+          <div class="factor-name">Ambition</div>
+          <div class="factor-desc">Where you want the business to be in 12 months</div>
+          <div class="factor-track"><div class="factor-dot" style="left:48%"></div></div>
+        </div>
+      </div>
+
+      <div class="pricing-footer anim-5">
+        <p><strong>Every one of these shapes the structure.</strong> The structure comes from the conversation.</p>
+      </div>
+
+    </div>
+  </div>
+
 </div><!-- /deck -->
 
 <!-- Slide menu popup -->
@@ -1495,6 +1608,7 @@
   <div class="menu-item" onclick="menuGoTo(12)"><span class="menu-num">12</span><span class="menu-title">Social Intel</span></div>
   <div class="menu-item" onclick="menuGoTo(13)"><span class="menu-num">13</span><span class="menu-title">Partnership</span></div>
   <div class="menu-item" onclick="menuGoTo(14)"><span class="menu-num">14</span><span class="menu-title">Get Started</span></div>
+  <div class="menu-item" onclick="menuGoTo(15)"><span class="menu-num">15</span><span class="menu-title">Pricing</span></div>
 </div>
 
 <div id="nav-bar">
@@ -1515,7 +1629,7 @@
 </div>
 
 <script>
-const TOTAL = 14;
+const TOTAL = 15;
 let current = 1;
 let animating = false;
 
@@ -2028,7 +2142,7 @@ const SLIDE_TITLES = {
   1:'Cover', 2:'Problem', 3:'Who We Are', 4:'Data Advantage',
   5:'Exclusivity', 6:'The Stack', 7:'Two Pillars', 8:'Video', 9:'Image',
   10:'Digital Humans', 11:'Business Analysis', 12:'Social Intelligence',
-  13:'Partnership', 14:'Get Started'
+  13:'Partnership', 14:'Get Started', 15:'Pricing'
 };
 const SLIDE_NOTES = {
   1: 'Open with the bold claim. Let silence land after "ByteDance AI Stack in Thailand."',
@@ -2045,6 +2159,7 @@ const SLIDE_NOTES = {
   12: 'Social intelligence — if client is e-commerce, double down here.',
   13: 'Partnership tiers slide. Have pricing sheet ready.',
   14: 'Call to action. Ask for the pilot commitment today.',
+  15: 'Pricing slide — no numbers. Walk through the six factors. End with "let\'s scope it together."',
 };
 
 const _params = new URLSearchParams(location.search);
