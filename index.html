@@ -615,26 +615,57 @@
   }
 
   /* Slide 9: Business Analysis — LIGHT */
-  #slide-11 .analysis-steps {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px;
+  #slide-11 .da-layout {
+    display: grid; grid-template-columns: 1fr 28px 1.15fr;
+    gap: 16px; align-items: center; margin-top: 28px; width: 100%;
   }
-  #slide-11 .step-card {
-    padding: 18px 22px; border-radius: 10px;
-    border: 1px solid var(--gray-light); background: #F8FAFC;
-    display: flex; gap: 14px; align-items: flex-start;
+  #slide-11 .da-box-label {
+    font-size: 8px; font-weight: 800; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
   }
-  #slide-11 .step-num {
-    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
-    color: var(--blue); background: rgba(37,99,235,0.08);
-    border-radius: 6px; padding: 4px 8px; flex-shrink: 0;
+  #slide-11 .da-prompt-box {
+    background: #fff; border: 1.5px solid rgba(37,99,235,0.3);
+    border-radius: 12px; padding: 18px 22px;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.07);
   }
-  #slide-11 .step-label { font-size: 0.92rem; font-weight: 600; color: var(--dark); }
-  #slide-11 .ticker {
-    font-family: monospace; font-size: 0.82rem;
-    color: var(--blue); background: rgba(37,99,235,0.05);
-    border: 1px solid rgba(37,99,235,0.2); border-radius: 6px;
-    padding: 12px 16px; margin-top: 24px;
-    overflow: hidden; white-space: nowrap; transition: opacity 0.2s;
+  #slide-11 .da-prompt-text {
+    font-size: clamp(0.88rem, 1.1vw, 1rem); color: var(--dark);
+    font-style: italic; line-height: 1.55; font-weight: 400;
+  }
+  #slide-11 .da-cursor {
+    display: inline-block; width: 2px; height: 0.9em;
+    background: var(--blue); vertical-align: text-bottom; margin-left: 2px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  #slide-11 .da-arrow-col {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: rgba(37,99,235,0.35); padding-top: 22px;
+  }
+  #slide-11 .da-report-box {
+    background: #fff; border: 1px solid #E2E8F0;
+    border-radius: 12px; padding: 18px 22px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  #slide-11 .da-report-badge {
+    font-size: 7px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #fff;
+    background: var(--blue); border-radius: 4px; padding: 2px 7px;
+    margin-left: 6px; vertical-align: middle;
+  }
+  #slide-11 .da-finding {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 9px 0; border-bottom: 1px solid #F1F5F9;
+  }
+  #slide-11 .da-finding:last-child { border-bottom: none; padding-bottom: 0; }
+  #slide-11 .da-finding-num {
+    font-size: 0.75rem; font-weight: 800; color: var(--blue);
+    background: rgba(37,99,235,0.08); border-radius: 6px;
+    padding: 3px 8px; flex-shrink: 0; white-space: nowrap;
+  }
+  #slide-11 .da-finding-text {
+    font-size: clamp(0.8rem, 1vw, 0.88rem); color: #475569; line-height: 1.5;
   }
 
   /* Slide 10: Social Intelligence */
@@ -1203,17 +1234,36 @@
 
   <!-- Slide 9: UNDERSTAND — Business Analysis — LIGHT -->
   <div class="slide slide-light" id="slide-11">
-    <div class="slide-left" style="max-width:900px;">
+    <div class="slide-left" style="max-width:900px;width:100%;">
       <span class="tag anim-1">Understand / Business Analysis</span>
-      <h2 class="anim-2">See your business the<br>way the data sees it.</h2>
-      <p class="anim-3" style="margin-top:16px;max-width:580px;">Ask in plain language. Get a structured analysis — powered by BytePlus's <strong>Data Agent</strong>, which queries your data, writes its own SQL, runs the analysis, and writes the report.</p>
-      <div class="analysis-steps anim-4">
-        <div class="step-card"><span class="step-num">GOAL</span><span class="step-label">Define the business question</span></div>
-        <div class="step-card"><span class="step-num">METHOD</span><span class="step-label">Auto-generate SQL queries</span></div>
-        <div class="step-card"><span class="step-num">ANALYSIS</span><span class="step-label">Run real-time data exploration</span></div>
-        <div class="step-card"><span class="step-num">REPORT</span><span class="step-label">Recommendations you can act on</span></div>
+      <h2 class="anim-2">Ask a question.<br>Get a full report.</h2>
+      <p class="anim-3" style="margin-top:14px;max-width:560px;">Plain language in. Structured analysis out. BytePlus's <strong>Data Agent</strong> writes its own queries, runs the analysis, and delivers recommendations — automatically.</p>
+      <div class="da-layout anim-4">
+
+        <div class="da-prompt-box">
+          <div class="da-box-label">Your question</div>
+          <div class="da-prompt-text">"Why did our Bangkok conversion rate drop 18% in April — and what should we fix first?"<span class="da-cursor"></span></div>
+        </div>
+
+        <div class="da-arrow-col">→</div>
+
+        <div class="da-report-box">
+          <div class="da-box-label">Your report <span class="da-report-badge">Auto-generated</span></div>
+          <div class="da-finding">
+            <span class="da-finding-num">↓ 18%</span>
+            <span class="da-finding-text">Mobile checkout abandonment — page load exceeds 3.1s at peak hours</span>
+          </div>
+          <div class="da-finding">
+            <span class="da-finding-num">Fix #1</span>
+            <span class="da-finding-text">Compress product images on mobile checkout → estimated +21% recovery</span>
+          </div>
+          <div class="da-finding">
+            <span class="da-finding-num">Alert</span>
+            <span class="da-finding-text">Competitor gained share during same window — pricing gap of ฿120 detected</span>
+          </div>
+        </div>
+
       </div>
-      <div class="ticker anim-5" id="sql-ticker">SELECT * FROM business_insights WHERE timeframe = 'now'...</div>
     </div>
   </div>
 
@@ -1655,7 +1705,7 @@ function animateWave() {
   if (!path) return;
   let t = 0;
   function draw() {
-    if (current !== 11) return;
+    if (current !== 12) return;
     t += 0.03;
     const pts = [];
     for (let x = 0; x <= 500; x += 5) {
