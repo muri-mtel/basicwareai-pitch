@@ -1741,7 +1741,7 @@ function goTo(next, dir = 1) {
     inSlide.style.transform = '';
     current = next;
     updateUI();
-    onSlideEnter(current);
+    try { onSlideEnter(current); } catch(e) { console.error('onSlideEnter error:', e); }
     setTimeout(() => { outSlide.classList.remove('exit-left'); animating = false; }, 420);
   }));
 }
@@ -2113,7 +2113,6 @@ function daHandlePromptClick() {
 
   promptBox.classList.add('da-typing');
   placeholder.style.opacity = '0';
-  setTimeout(() => placeholder.remove(), 300);
 
   const text = '"Why did our Bangkok conversion rate drop 18% in April — and what should we fix first?"';
   let i = 0;
