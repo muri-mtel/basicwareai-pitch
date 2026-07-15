@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basicware AI — The ByteDance AI Stack in Thailand</title>
-<link rel="icon" type="image/png" href="assets/logo.png">
+<title>Basicware AI — BytePlus' Local Delivery Partner</title>
+<link rel="icon" type="image/png" href="assets/new-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -45,10 +45,10 @@
     z-index: 100;
     height: 36px;
     opacity: 0.9;
-    filter: brightness(0) invert(1);
+    filter: none;
     transition: filter 0.3s;
   }
-  body.light-slide #logo { filter: none; }
+  body.light-slide #logo { filter: brightness(0); }
 
   /* ── Nav + counter — centered ── */
   #nav-bar {
@@ -272,6 +272,19 @@
   #slide-2 .body-text p { font-size: clamp(1rem, 1.5vw, 1.2rem); margin-bottom: 16px; }
 
   /* Slide 3: Who We Are */
+  #slide-3 .s3-layout {
+    display: flex; align-items: center; gap: 56px;
+    width: 100%; max-width: 1180px;
+  }
+  #slide-3 .s3-tree-wrap {
+    flex: 1; min-width: 320px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  #slide-3 .s3-tree { width: 100%; max-width: 460px; height: auto; }
+  #slide-3 .s3-tree-caption {
+    font-size: 0.78rem; color: var(--gray); text-align: center;
+    max-width: 360px; line-height: 1.5;
+  }
   #slide-3 .brand-logos {
     display: flex; align-items: center; gap: 24px;
     margin: 20px 0 8px;
@@ -337,34 +350,29 @@
   #slide-4 .s4-stat + .s4-stat {
     border-top: 1px solid rgba(96,165,250,0.15);
   }
-  #slide-4 .s4-step-text {
-    position: absolute; top: calc(50% + 36px); left: 50%; transform: translateX(-50%) translateY(6px);
-    width: min(420px, 88%);
-    background: rgba(10, 16, 40, 0.78);
+  #slide-4 .s4-insights {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    gap: 22px; padding: 0 5%;
+  }
+  #slide-4 .s4-insight {
+    flex: 1; max-width: 280px;
+    background: rgba(10, 16, 40, 0.82);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(96,165,250,0.22);
-    border-radius: 14px;
-    padding: 20px 24px;
-    font-size: 1rem; color: var(--gray); line-height: 1.65;
-    opacity: 0;
-    transition: opacity 0.45s ease, transform 0.45s ease;
-    pointer-events: none;
+    border: 1px solid rgba(96,165,250,0.25);
+    border-radius: 16px;
+    padding: 28px 26px;
   }
-  #slide-4 .s4-step-text.visible {
-    opacity: 1; transform: translateX(-50%) translateY(0);
+  #slide-4 .s4-insight-num {
+    display: block; font-size: 0.82rem; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue-light); margin-bottom: 12px;
   }
-
-  #slide-4 .s4-step-label {
-    display: inline-block; font-size: 0.75rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--blue-light); margin-bottom: 8px;
+  #slide-4 .s4-insight-title {
+    font-size: 1.2rem; font-weight: 700; color: var(--white); line-height: 1.28;
   }
-  #slide-4 .s4-step-title {
-    font-size: 1.35rem; font-weight: 700; color: var(--white);
-    margin-bottom: 8px; line-height: 1.25;
-  }
-  #slide-4 .s4-step-body {
-    font-size: 0.92rem; color: var(--gray); line-height: 1.6;
+  #slide-4 .s4-insight-body {
+    font-size: 0.9rem; color: var(--gray); line-height: 1.6; margin-top: 12px;
   }
   #slide-4 .s4-right {
     position: relative; height: 100%; align-self: stretch;
@@ -401,73 +409,67 @@
     background: rgba(234,88,12,0.07);
   }
 
-  /* Slide 6: Comparison */
+  /* Slide 6: Product relationship pipeline */
   #slide-6 { background: transparent; }
   #slide-6 .compare-wrap {
-    max-width: 940px; width: 100%;
-    display: flex; flex-direction: column; align-items: center; gap: 28px;
+    max-width: 1160px; width: 100%;
+    display: flex; flex-direction: column; align-items: center; gap: 26px;
   }
-  #slide-6 .compare-cols {
-    display: grid; grid-template-columns: 1fr 1.65fr;
-    gap: 36px; width: 100%; align-items: start;
+  #slide-6 .s6-pipeline {
+    width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px;
   }
-  #slide-6 .col-head {
-    margin-bottom: 10px;
+  #slide-6 .s6-loop-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 18px; border-radius: 20px;
+    border: 1px dashed rgba(96,165,250,0.4);
+    background: rgba(37,99,235,0.08);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--blue-light); text-align: center;
   }
-  #slide-6 .col-title {
-    font-size: clamp(1.3rem, 2.2vw, 1.9rem); font-weight: 800;
-    letter-spacing: -0.02em; line-height: 1.1;
+  #slide-6 .s6-row {
+    display: flex; align-items: stretch; gap: 8px; width: 100%;
   }
-  #slide-6 .col-left .col-title { color: rgba(255,255,255,0.32); }
-  #slide-6 .col-right .col-title {
-    background: linear-gradient(120deg, var(--white) 40%, var(--blue-light) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
+  #slide-6 .s6-node {
+    flex: 1; min-width: 0;
+    border-radius: 12px; border: 1px solid rgba(96,165,250,0.25);
+    padding: 18px 12px;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    text-align: center;
   }
-  #slide-6 .col-sublabel {
-    display: block; margin-top: 5px;
-    font-size: 8px; font-weight: 800; letter-spacing: 0.22em;
-    text-transform: uppercase;
+  #slide-6 .s6-node.n1 { background: rgba(37,99,235,0.07); }
+  #slide-6 .s6-node.n2 { background: rgba(37,99,235,0.11); }
+  #slide-6 .s6-node.n3 {
+    background: linear-gradient(160deg, rgba(96,165,250,0.4), rgba(37,99,235,0.28));
+    border-color: rgba(96,165,250,0.6);
+    box-shadow: 0 8px 24px rgba(37,99,235,0.25);
   }
-  #slide-6 .col-left .col-sublabel { color: rgba(255,255,255,0.2); }
-  #slide-6 .col-right .col-sublabel { color: var(--blue-light); }
-  /* Left: thin ghost box */
-  #slide-6 .generic-box {
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    height: 155px;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: flex-start;
-    padding: 20px 26px; gap: 8px;
+  #slide-6 .s6-node.n4 { background: rgba(37,99,235,0.16); }
+  #slide-6 .s6-node.n5 { background: rgba(37,99,235,0.21); }
+  #slide-6 .s6-num {
+    font-size: 0.66rem; font-weight: 800; color: var(--blue-light);
+    background: rgba(255,255,255,0.08); border-radius: 6px; padding: 3px 8px;
   }
-  #slide-6 .generic-line {
-    font-size: clamp(0.82rem, 1.1vw, 0.95rem); font-weight: 400;
-    color: rgba(255,255,255,0.22); line-height: 1.5;
+  #slide-6 .s6-node.n3 .s6-num { color: #fff; background: rgba(255,255,255,0.2); }
+  #slide-6 .s6-name { font-size: 0.98rem; font-weight: 800; color: var(--white); }
+  #slide-6 .s6-desc { font-size: 0.72rem; color: rgba(255,255,255,0.55); line-height: 1.4; }
+  #slide-6 .s6-node.n3 .s6-desc { color: rgba(255,255,255,0.85); }
+  #slide-6 .s6-arrow {
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; width: 18px;
+    color: rgba(96,165,250,0.4); font-size: 1.1rem;
   }
-  /* Right: layered stack */
-  #slide-6 .stack-col { display: flex; flex-direction: column; }
-  #slide-6 .stack-layer {
-    padding: 16px 24px;
-    display: flex; flex-direction: column; gap: 5px;
-    border: 1px solid rgba(96,165,250,0.2);
-    border-radius: 0;
+  #slide-6 .s6-feed {
+    color: rgba(96,165,250,0.5); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
   }
-  #slide-6 .stack-layer:first-child { border-radius: 12px 12px 0 0; }
-  #slide-6 .stack-layer:last-child  { border-radius: 0 0 12px 12px; }
-  #slide-6 .stack-layer + .stack-layer { border-top: none; }
-  /* darkest at bottom (infrastructure = depth), lightest at top (your business = opportunity) */
-  #slide-6 .stack-layer:nth-child(1) { background: rgba(37,99,235,0.06); box-shadow: inset 0 -1px 0 rgba(96,165,250,0.06); }
-  #slide-6 .stack-layer:nth-child(2) { background: rgba(37,99,235,0.10); box-shadow: inset 0 -1px 0 rgba(96,165,250,0.08); }
-  #slide-6 .stack-layer:nth-child(3) { background: rgba(37,99,235,0.15); box-shadow: inset 0 -1px 0 rgba(96,165,250,0.10); }
-  #slide-6 .stack-layer:nth-child(4) { background: rgba(37,99,235,0.22); box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
-  #slide-6 .layer-label {
-    font-size: 8px; font-weight: 800; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--blue-light);
+  #slide-6 .s6-dashboard {
+    width: 100%; border-radius: 12px;
+    background: linear-gradient(90deg, rgba(37,99,235,0.16), rgba(96,165,250,0.08));
+    border: 1px solid rgba(96,165,250,0.28);
+    padding: 14px 26px; text-align: center;
   }
-  #slide-6 .layer-items {
-    font-size: clamp(0.8rem, 1vw, 0.9rem); font-weight: 500;
-    color: rgba(255,255,255,0.6); line-height: 1.55;
-  }
+  #slide-6 .s6-dashboard-title { font-size: 0.92rem; font-weight: 800; color: #fff; letter-spacing: 0.02em; }
+  #slide-6 .s6-dashboard-sub { font-size: 0.76rem; color: rgba(255,255,255,0.55); margin-top: 4px; }
   #slide-6 .compare-headline {
     text-align: center;
     font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 800;
@@ -546,12 +548,35 @@
   #slide-8 .branding-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
   }
-  #slide-8 .cost-callout {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin-top: 24px; padding: 10px 20px;
-    background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
-    border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: var(--blue-light);
+  #slide-8 .s8-metrics {
+    display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap;
   }
+  #slide-8 .s8-metric-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gray); margin-bottom: 6px;
+  }
+  #slide-8 .s8-metric-flip { display: flex; align-items: baseline; gap: 10px; }
+  #slide-8 .s8-metric-old {
+    font-size: 1.05rem; font-weight: 600; color: rgba(255,255,255,0.32);
+    text-decoration: line-through; text-decoration-color: rgba(248,113,113,0.5);
+    white-space: nowrap;
+  }
+  #slide-8 .s8-metric-arrow { font-size: 1.1rem; color: var(--blue-light); }
+  #slide-8 .s8-metric-new {
+    font-size: clamp(1.7rem, 2.6vw, 2.3rem); font-weight: 800; white-space: nowrap;
+    background: linear-gradient(135deg, var(--blue-light), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .yt-badge {
+    position: absolute; top: 8px; right: 8px; z-index: 2;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(255,0,0,0.85);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .yt-badge:hover { transform: scale(1.12); background: #FF0000; }
+  .branding-grid .yt-badge { width: 20px; height: 20px; top: 6px; right: 6px; }
 
   /* Slide 7: Image */
   #slide-9 { padding: 48px 72px; }
@@ -593,6 +618,7 @@
   }
   #slide-9 .output-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   #slide-9 .out-img-wrap {
+    position: relative;
     border-radius: 10px; overflow: hidden;
     border: 1px solid rgba(96,165,250,0.15);
     opacity: 0; transform: scale(0.88) translateY(8px);
@@ -602,7 +628,49 @@
   #slide-9 .out-img-wrap.revealed { opacity: 1; transform: scale(1) translateY(0); }
   #slide-9 .out-img-wrap:hover { border-color: rgba(96,165,250,0.5); }
   #slide-9 .out-img-wrap img { width: 100%; height: 135px; object-fit: cover; display: block; }
-  #slide-9 .slide-copy { margin-bottom: 20px; }
+  #slide-9 .out-ratio-label {
+    position: absolute; bottom: 6px; right: 6px;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--white); background: rgba(10,16,40,0.72);
+    border: 1px solid rgba(96,165,250,0.3);
+    border-radius: 5px; padding: 2px 6px;
+  }
+  #slide-9 .slide-copy { margin-bottom: 56px; }
+  #slide-9 .s9-header-grid {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 48px; align-items: start;
+  }
+  #slide-9 .s9-metrics {
+    display: flex; flex-direction: column; gap: 18px;
+    padding: 28px 32px;
+    background: linear-gradient(160deg, rgba(37,99,235,0.16), rgba(96,165,250,0.05));
+    border: 1px solid rgba(96,165,250,0.35);
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(37,99,235,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  #slide-9 .s9-metric-label {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue-light); margin-bottom: 8px;
+  }
+  #slide-9 .s9-metric-flip { display: flex; align-items: baseline; gap: 10px; }
+  #slide-9 .s9-metric-old {
+    font-size: 1.1rem; font-weight: 600; color: rgba(255,255,255,0.38);
+    text-decoration: line-through; text-decoration-color: rgba(248,113,113,0.55);
+    white-space: nowrap;
+  }
+  #slide-9 .s9-metric-arrow { font-size: 1.2rem; color: var(--blue-light); }
+  #slide-9 .s9-metric-new {
+    font-size: clamp(2.1rem, 3.2vw, 2.8rem); font-weight: 800; white-space: nowrap;
+    background: linear-gradient(135deg, var(--blue-light), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  #slide-9 .s9-metric-tags { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  #slide-9 .feature-tag {
+    padding: 6px 14px; border-radius: 20px;
+    background: rgba(37,99,235,0.15); border: 1px solid rgba(96,165,250,0.3);
+    font-size: 0.78rem; font-weight: 600; color: var(--blue-light);
+    white-space: nowrap;
+  }
 
   /* Slide 8: OmniHuman — video full */
   #slide-10 { padding: 60px; }
@@ -1108,7 +1176,7 @@
   </div>
   <button id="hud-end" onclick="endPresenterMode()">End Presentation</button>
 </div>
-<img id="logo" src="assets/logo.png" alt="Basicware AI">
+<img id="logo" src="assets/new-logo.png" alt="Basicware AI">
 <canvas id="particle-canvas"></canvas>
 <div id="cursor-glow"></div>
 
@@ -1124,8 +1192,7 @@
   <div class="slide slide-dark" id="slide-1">
     <div class="slide-center" style="position:relative;z-index:2;">
       <p class="eyebrow anim-1">Basicware AI × BytePlus</p>
-      <h1 class="anim-2">The ByteDance AI Stack,<br>Delivered in Thailand</h1>
-      <p class="subtitle anim-3" style="margin-top:24px;">Beyond Off-the-Shelf AI</p>
+      <h1 class="anim-2">Basicware AI<br><span style="font-size:0.52em;font-weight:600;color:var(--gray);">BytePlus' Local Delivery Partner</span></h1>
     </div>
   </div>
 
@@ -1149,7 +1216,8 @@
 
   <!-- Slide 3: Who We Are -->
   <div class="slide slide-dark" id="slide-3">
-    <div class="slide-left" style="max-width:860px;">
+    <div class="s3-layout">
+    <div class="slide-left s3-text" style="max-width:620px;">
       <span class="tag anim-1">The Technology</span>
       <h2 class="anim-2">Built by the team behind<br><span class="highlight">TikTok, CapCut, and Douyin.</span></h2>
       <!-- Brand logos -->
@@ -1190,6 +1258,50 @@
         </div>
       </div>
     </div>
+
+    <!-- Family tree illustration -->
+    <div class="s3-tree-wrap anim-5">
+      <svg class="s3-tree" viewBox="0 0 460 214" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="s3RootGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1E3A8A"/>
+            <stop offset="100%" stop-color="#2563EB"/>
+          </linearGradient>
+          <linearGradient id="s3BpGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#60A5FA"/>
+            <stop offset="100%" stop-color="#2563EB"/>
+          </linearGradient>
+        </defs>
+
+        <!-- connectors -->
+        <line x1="232" y1="54" x2="232" y2="90" stroke="rgba(96,165,250,0.35)" stroke-width="1.5"/>
+        <line x1="60" y1="90" x2="405" y2="90" stroke="rgba(96,165,250,0.35)" stroke-width="1.5"/>
+        <line x1="60" y1="90" x2="60" y2="158" stroke="rgba(96,165,250,0.35)" stroke-width="1.5"/>
+        <line x1="175" y1="90" x2="175" y2="158" stroke="rgba(96,165,250,0.35)" stroke-width="1.5"/>
+        <line x1="290" y1="90" x2="290" y2="158" stroke="rgba(96,165,250,0.35)" stroke-width="1.5"/>
+        <line x1="405" y1="90" x2="405" y2="158" stroke="rgba(96,165,250,0.35)" stroke-width="1.5"/>
+
+        <!-- root: ByteDance -->
+        <rect x="162" y="10" width="140" height="44" rx="10" fill="url(#s3RootGrad)" stroke="#60A5FA" stroke-opacity="0.4"/>
+        <text x="232" y="37" text-anchor="middle" fill="#fff" font-size="15" font-weight="800" font-family="'Plus Jakarta Sans',sans-serif">ByteDance</text>
+
+        <!-- children -->
+        <rect x="10" y="158" width="100" height="48" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(96,165,250,0.25)"/>
+        <text x="60" y="187" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans',sans-serif">TikTok</text>
+
+        <rect x="125" y="158" width="100" height="48" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(96,165,250,0.25)"/>
+        <text x="175" y="187" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans',sans-serif">Douyin</text>
+
+        <rect x="240" y="158" width="100" height="48" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(96,165,250,0.25)"/>
+        <text x="290" y="187" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans',sans-serif">CapCut</text>
+
+        <rect x="355" y="158" width="100" height="48" rx="10" fill="url(#s3BpGrad)" stroke="#93C5FD" stroke-width="1.5" style="filter:drop-shadow(0 0 10px rgba(96,165,250,0.55));"/>
+        <text x="405" y="187" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="800" font-family="'Plus Jakarta Sans',sans-serif">BytePlus</text>
+      </svg>
+      <div class="s3-tree-caption">BytePlus is the enterprise AI arm — same family, same technology.</div>
+    </div>
+
+    </div>
   </div>
 
   <!-- Slide 4: Data Advantage -->
@@ -1211,7 +1323,23 @@
       </div>
       <div class="s4-right">
         <canvas id="s4-canvas"></canvas>
-        <div id="s4-step-text" class="s4-step-text"></div>
+        <div class="s4-insights">
+          <div class="s4-insight anim-4">
+            <span class="s4-insight-num">01</span>
+            <div class="s4-insight-title">Market data driven</div>
+            <div class="s4-insight-body">The model knows what each segment responds to.</div>
+          </div>
+          <div class="s4-insight anim-5">
+            <span class="s4-insight-num">02</span>
+            <div class="s4-insight-title">AI generated content</div>
+            <div class="s4-insight-body">Audience-aware creative, not generic output.</div>
+          </div>
+          <div class="s4-insight anim-6">
+            <span class="s4-insight-num">03</span>
+            <div class="s4-insight-title">Higher conversion</div>
+            <div class="s4-insight-body">Campaigns built on behavioural data perform differently.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1237,47 +1365,47 @@
 
       <h2 class="compare-headline anim-1">The same stack used by BytePlus,<br>available to you.</h2>
 
-      <div class="compare-cols anim-2">
+      <div class="s6-pipeline anim-2">
+        <span class="s6-loop-badge">↻ Closed-loop refinement — every cycle gets smarter</span>
 
-        <!-- Left: Generic AI -->
-        <div class="col-left">
-          <div class="col-head">
-            <div class="col-title">Everyone else's AI.</div>
-            <span class="col-sublabel">Generic AI</span>
+        <div class="s6-row">
+          <div class="s6-node n1">
+            <span class="s6-num">01</span>
+            <div class="s6-name">VeCDP</div>
+            <div class="s6-desc">Customer data · Segmentation</div>
           </div>
-          <div class="generic-box">
-            <div class="generic-line">Off-the-shelf AI.</div>
-            <div class="generic-line">A single model.</div>
-            <div class="generic-line">Behind a chat box.</div>
+          <div class="s6-arrow">›</div>
+          <div class="s6-node n2">
+            <span class="s6-num">02</span>
+            <div class="s6-name">DataFinder</div>
+            <div class="s6-desc">Behaviour analysis</div>
+          </div>
+          <div class="s6-arrow">›</div>
+          <div class="s6-node n3">
+            <span class="s6-num">03</span>
+            <div class="s6-name">AI Models</div>
+            <div class="s6-desc">Seedance · Seedream · OmniHuman</div>
+          </div>
+          <div class="s6-arrow">›</div>
+          <div class="s6-node n4">
+            <span class="s6-num">04</span>
+            <div class="s6-name">GMP</div>
+            <div class="s6-desc">Targeted delivery</div>
+          </div>
+          <div class="s6-arrow">›</div>
+          <div class="s6-node n5">
+            <span class="s6-num">05</span>
+            <div class="s6-name">DataWind</div>
+            <div class="s6-desc">Performance signal</div>
           </div>
         </div>
 
-        <!-- Right: BytePlus stack -->
-        <div class="col-right">
-          <div class="col-head">
-            <div class="col-title">Yours.</div>
-            <span class="col-sublabel">BytePlus — via Basicware AI TH</span>
-          </div>
-          <div class="stack-col">
-            <div class="stack-layer">
-              <div class="layer-label">Engagement &amp; Automation</div>
-              <div class="layer-items">GMP — Global Marketing Platform</div>
-            </div>
-            <div class="stack-layer">
-              <div class="layer-label">AI Models</div>
-              <div class="layer-items">Seedance · Seedream · OmniHuman · SeedEdit</div>
-            </div>
-            <div class="stack-layer">
-              <div class="layer-label">Customer Intelligence</div>
-              <div class="layer-items">VeCDP · DataFinder · DataWind</div>
-            </div>
-            <div class="stack-layer">
-              <div class="layer-label">ByteDance Infrastructure</div>
-              <div class="layer-items">The engine behind TikTok, CapCut, and Douyin</div>
-            </div>
-          </div>
-        </div>
+        <div class="s6-feed">↓ feeds</div>
 
+        <div class="s6-dashboard">
+          <div class="s6-dashboard-title">Powered by ByteDance Infrastructure</div>
+          <div class="s6-dashboard-sub">The engine behind TikTok, CapCut, and Douyin.</div>
+        </div>
       </div>
 
       <p class="compare-tagline anim-3"><strong>Same price range.</strong> A different universe of capability.</p>
@@ -1309,16 +1437,43 @@
       <div>
         <span class="tag anim-1">Create / Video</span>
         <h2 class="anim-2">Cinematic video.<br>In minutes. Not weeks.</h2>
-        <p class="anim-3" style="margin-top:20px;"><strong>Seedance 1.5 Pro</strong> — BytePlus's flagship video generation model. Independently benchmarked above Kling 2.6 and Google's Veo 3.1 on both video quality and audio synchronization.</p>
+        <p class="anim-3" style="margin-top:20px;"><strong>Seedance 2.5 Pro</strong> — BytePlus's flagship video generation model. Independently benchmarked above Kling 2.6 and Google's Veo 3.1 on both video quality and audio synchronization.</p>
         <p class="anim-4" style="margin-top:12px;">Brief in, finished spot out. Music-synced. Direction-aware.</p>
-        <div class="cost-callout anim-5">
-          <span>💰</span><span>10% of traditional production cost</span>
+        <div class="s8-metrics anim-5">
+          <div class="s8-metric">
+            <div class="s8-metric-label">Production Cost</div>
+            <div class="s8-metric-flip">
+              <span class="s8-metric-old">฿2,000,000</span>
+              <span class="s8-metric-arrow">→</span>
+              <span class="s8-metric-new">฿200,000</span>
+            </div>
+          </div>
+          <div class="s8-metric">
+            <div class="s8-metric-label">Turnaround Time</div>
+            <div class="s8-metric-flip">
+              <span class="s8-metric-old">1 Month</span>
+              <span class="s8-metric-arrow">→</span>
+              <span class="s8-metric-new">1 Week</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="anim-4">
         <div class="s6-tabs">
+          <button class="s6-tab" data-cat="worldcup" onclick="s6SelectCategory('worldcup')">World Cup</button>
           <button class="s6-tab active" data-cat="creative" onclick="s6SelectCategory('creative')">Creative</button>
           <button class="s6-tab" data-cat="branding" onclick="s6SelectCategory('branding')">Branding</button>
+        </div>
+        <!-- World Cup panel -->
+        <div class="s6-panel" id="s6-panel-worldcup">
+          <div class="video-thumb" onclick="openYouTubeModal('YaF7jYgS2iw')">
+            <img src="https://i.ytimg.com/vi/YaF7jYgS2iw/hqdefault.jpg" alt="Neymar's 2026 World Cup" style="width:100%;display:block;">
+            <div class="play-overlay">
+              <div class="play-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- Creative panel -->
         <div class="s6-panel active" id="s6-panel-creative">
@@ -1331,25 +1486,20 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
               </div>
             </div>
+            <a class="yt-badge" href="https://www.youtube.com/@BasicwareAI" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Watch on YouTube">
+              <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#fff" d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.7-.8-2.1-.9C16 5 12 5 12 5h0s-4 0-6.9.1c-.4.1-1.3.1-2.1.9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.6c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.9.8 2.4.9 1.7.2 6.6.2 6.6.2s4 0 6.9-.1c.4-.1 1.3-.1 2.1-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.6c0-1.6-.2-3.2-.2-3.2zM9.8 14.6V8.7l5.4 2.9-5.4 3z"/></svg>
+            </a>
           </div>
         </div>
         <!-- Branding panel -->
         <div class="s6-panel" id="s6-panel-branding">
           <div class="branding-grid">
-            <div class="video-thumb" onclick="openVideoModal('assets/momax1.MP4')">
-              <video muted playsinline preload="metadata"><source src="assets/momax1.MP4#t=0.5" type="video/mp4"></video>
+            <div class="video-thumb" onclick="openYouTubeModal('owmFuLi1Z60')">
+              <img src="https://i.ytimg.com/vi/owmFuLi1Z60/hqdefault.jpg" alt="momax 1-vibe Magnetic Wireless Speaker" style="width:100%;display:block;">
               <div class="play-overlay"><div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
             </div>
-            <div class="video-thumb" onclick="openVideoModal('assets/momax2.MP4')">
-              <video muted playsinline preload="metadata"><source src="assets/momax2.MP4#t=0.5" type="video/mp4"></video>
-              <div class="play-overlay"><div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
-            </div>
-            <div class="video-thumb" onclick="openVideoModal('assets/momax3.MP4')">
-              <video muted playsinline preload="metadata"><source src="assets/momax3.MP4#t=0.5" type="video/mp4"></video>
-              <div class="play-overlay"><div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
-            </div>
-            <div class="video-thumb" onclick="openVideoModal('assets/momax4.MP4')">
-              <video muted playsinline preload="metadata"><source src="assets/momax4.MP4#t=0.5" type="video/mp4"></video>
+            <div class="video-thumb" onclick="openYouTubeModal('oX_UmmIigVY')">
+              <img src="https://i.ytimg.com/vi/oX_UmmIigVY/hqdefault.jpg" alt="momax 1-Vibe Go Magnetic Wireless Speaker" style="width:100%;display:block;">
               <div class="play-overlay"><div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
             </div>
           </div>
@@ -1361,15 +1511,31 @@
   <!-- Slide 7: CREATE — Image -->
   <div class="slide slide-dark" id="slide-9">
     <div style="max-width:1200px;width:100%;">
-      <div class="slide-copy">
-        <span class="tag anim-1">Create / Image</span>
-        <h2 class="anim-2">One photo. Infinite campaign assets.</h2>
-        <p class="anim-3" style="max-width:600px;margin-top:10px;"><strong>Seedream 5.0 Lite</strong> — preserves the face, setting, and brand details while generating unlimited outfit and styling variants. No reshooting required.</p>
+      <div class="slide-copy s9-header-grid">
+        <div class="s9-header-left">
+          <span class="tag anim-1">Create / Image</span>
+          <h2 class="anim-2">One photo. Infinite campaign assets.</h2>
+          <p class="anim-3" style="max-width:600px;margin-top:10px;"><strong>Seedream 5.0 Pro</strong> — preserves the full creative while instantly reformatting it across every aspect ratio a campaign needs. No reshooting, no manual cropping.</p>
+        </div>
+        <div class="s9-metrics anim-4">
+          <div class="s9-metric">
+            <div class="s9-metric-label">Digital Signage Campaign Turnaround</div>
+            <div class="s9-metric-flip">
+              <span class="s9-metric-old">3 Days</span>
+              <span class="s9-metric-arrow">→</span>
+              <span class="s9-metric-new">1 Day</span>
+            </div>
+          </div>
+          <div class="s9-metric-tags">
+            <span class="feature-tag">↓ Lower cost</span>
+            <span class="feature-tag">↑ Increased production</span>
+          </div>
+        </div>
       </div>
       <div class="seedream-layout anim-4">
         <div class="input-col">
-          <img src="assets/inputA.png" alt="Source photo">
-          <span class="img-label">Source photo</span>
+          <img src="assets/1-1.jpeg" alt="Master creative — 1:1">
+          <span class="img-label">1:1 Master</span>
         </div>
         <div class="gen-col">
           <span class="gen-arrow">→</span>
@@ -1377,12 +1543,12 @@
           <span class="gen-arrow">→</span>
         </div>
         <div class="output-col" id="output-grid">
-          <div class="out-img-wrap" onclick="openImageModal('assets/outputA1.png')"><img src="assets/outputA1.png" alt="Variant 1"></div>
-          <div class="out-img-wrap" onclick="openImageModal('assets/outputA2.png')"><img src="assets/outputA2.png" alt="Variant 2"></div>
-          <div class="out-img-wrap" onclick="openImageModal('assets/outputA3.png')"><img src="assets/outputA3.png" alt="Variant 3"></div>
-          <div class="out-img-wrap" onclick="openImageModal('assets/outputA4.png')"><img src="assets/outputA4.png" alt="Variant 4"></div>
-          <div class="out-img-wrap" onclick="openImageModal('assets/outputA5.png')"><img src="assets/outputA5.png" alt="Variant 5"></div>
-          <div class="out-img-wrap" onclick="openImageModal('assets/outputA6.png')"><img src="assets/outputA6.png" alt="Variant 6"></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/16-9.jpeg')"><img src="assets/16-9.jpeg" alt="16:9 variant"><span class="out-ratio-label">16:9</span></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/9-16.jpeg')"><img src="assets/9-16.jpeg" alt="9:16 variant"><span class="out-ratio-label">9:16</span></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/2-3.jpeg')"><img src="assets/2-3.jpeg" alt="2:3 variant"><span class="out-ratio-label">2:3</span></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/21-9.jpeg')"><img src="assets/21-9.jpeg" alt="21:9 variant"><span class="out-ratio-label">21:9</span></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/4-5.png')"><img src="assets/4-5.png" alt="4:5 variant"><span class="out-ratio-label">4:5</span></div>
+          <div class="out-img-wrap" onclick="openImageModal('assets/4-1.png')"><img src="assets/4-1.png" alt="4:1 variant"><span class="out-ratio-label">4:1</span></div>
         </div>
       </div>
     </div>
@@ -1393,7 +1559,7 @@
     <div class="omni-layout">
       <div>
         <span class="tag anim-1">Create / Digital Humans</span>
-        <h2 class="anim-2">Turn a single photo<br>into a spokesperson.</h2>
+        <h2 class="anim-2">Turn a single photo into<br>a <span class="highlight">Digital Human</span> spokesperson.</h2>
         <p class="anim-3" style="margin-top:20px;"><strong>OmniHuman 1.5</strong> — feed it an image and an audio file. Out comes a lifelike video. Perfect lip-sync. Real expressions. Any language.</p>
         <p class="anim-4" style="margin-top:12px;">Brand ambassadors, training videos, localized campaigns — without a studio.</p>
         <div class="tag-row anim-5">
@@ -1779,6 +1945,11 @@ function openImageModal(src) {
   content.innerHTML = `<img src="${src}" alt="" style="max-width:88vw;max-height:88vh;border-radius:12px;box-shadow:0 40px 80px rgba(0,0,0,0.6);">`;
   document.getElementById('modal').classList.add('open');
 }
+function openYouTubeModal(videoId) {
+  const content = document.getElementById('modal-content');
+  content.innerHTML = `<div style="width:80vw;max-width:960px;aspect-ratio:16/9;"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:12px;box-shadow:0 40px 80px rgba(0,0,0,0.6);"></iframe></div>`;
+  document.getElementById('modal').classList.add('open');
+}
 function closeModal() {
   const modal = document.getElementById('modal');
   modal.classList.remove('open');
@@ -1809,156 +1980,33 @@ function revealOutputs() {
   setTimeout(() => { btn.classList.remove('generating'); btn.textContent = '✓ 6 variants generated'; }, 600 + (wraps.length - 1) * 130 + 400);
 }
 
-// ── Data canvas (slide 4) — 3-step state machine ──
-let s4RAF = null;
-let s4Step = 0;       // 0=scatter 1=clusters 2=single-dot 3=exploded
-let s4Prev = 0;       // step animating FROM
-let s4TransStart = null;
-const S4_DUR = 1.1;   // seconds per transition
-
-const S4_STEPS = [
-  null,
-  { label: '01', title: 'Market data driven', body: 'The model knows what each segment responds to.' },
-  { label: '02', title: 'AI generated content', body: 'Audience-aware creative, not generic output.' },
-  { label: '03', title: 'Higher conversion', body: 'Campaigns built on behavioural data perform differently.' },
-];
-
-function s4SetText(step) {
-  const el = document.getElementById('s4-step-text');
-  if (!el) return;
-  el.classList.remove('visible');
-  if (step > 0) {
-    const s = S4_STEPS[step];
-    setTimeout(() => {
-      el.innerHTML = `<span class="s4-step-label">${s.label}</span><div class="s4-step-title">${s.title}</div><div class="s4-step-body">${s.body}</div>`;
-      el.classList.add('visible');
-    }, 200);
-  }
-}
-
-function s4Advance() {
-  if (s4Step >= 3) return;
-  s4Prev = s4Step;
-  s4Step++;
-  s4TransStart = null;
-  s4SetText(s4Step);
-}
-
-function s4Retreat() {
-  if (s4Step <= 0) return;
-  s4Prev = s4Step;
-  s4Step--;
-  s4TransStart = null;
-  s4SetText(s4Step);
-}
-
-let s4Dots = null;
-
+// ── Data canvas (slide 4) — static, rendered in one go ──
 function animateS4Canvas() {
   const canvas = document.getElementById('s4-canvas');
   if (!canvas) return;
-  if (s4RAF) { cancelAnimationFrame(s4RAF); s4RAF = null; }
 
   canvas.width  = canvas.offsetWidth  * devicePixelRatio;
   canvas.height = canvas.offsetHeight * devicePixelRatio;
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height, PR = devicePixelRatio;
-
-  s4Step = 0; s4Prev = 0; s4TransStart = null;
-  s4SetText(0);
-
-  const clusters = [
-    { x: W * 0.28, y: H * 0.24 },
-    { x: W * 0.68, y: H * 0.44 },
-    { x: W * 0.42, y: H * 0.76 },
-  ];
-  const center = { x: W * 0.50, y: H * 0.50 };
   const GROUP_COLORS = ['96,165,250', '129,140,248', '52,211,153'];
 
   const NDOTS = 260;
-  s4Dots = Array.from({length: NDOTS}, (_, i) => {
-    const group = i % 3;
-    const c = clusters[group];
-    return {
-      group,
-      x0: (0.04 + Math.random() * 0.92) * W,
-      y0: (0.04 + Math.random() * 0.92) * H,
-      x1: c.x + (Math.random() - 0.5) * 58 * PR,
-      y1: c.y + (Math.random() - 0.5) * 46 * PR,
-      x2: center.x + (Math.random() - 0.5) * 7 * PR,
-      y2: center.y + (Math.random() - 0.5) * 7 * PR,
-      x3: (0.04 + Math.random() * 0.92) * W,
-      y3: (0.04 + Math.random() * 0.92) * H,
-      r: (1.2 + Math.random() * 1.6) * PR,
-      alpha: 0.18 + Math.random() * 0.52,
-      delay: Math.random() * 0.18,
-    };
-  });
+  const dots = Array.from({length: NDOTS}, (_, i) => ({
+    group: i % 3,
+    x: (0.04 + Math.random() * 0.92) * W,
+    y: (0.04 + Math.random() * 0.92) * H,
+    r: (1.2 + Math.random() * 1.6) * PR,
+    alpha: 0.18 + Math.random() * 0.52,
+  }));
 
-  function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-
-  function dotPos(dot, t) {
-    const px = [dot.x0, dot.x1, dot.x2, dot.x3];
-    const py = [dot.y0, dot.y1, dot.y2, dot.y3];
-    return {
-      x: px[s4Prev] + (px[s4Step] - px[s4Prev]) * t,
-      y: py[s4Prev] + (py[s4Step] - py[s4Prev]) * t,
-    };
+  ctx.clearRect(0, 0, W, H);
+  for (const dot of dots) {
+    ctx.beginPath();
+    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${GROUP_COLORS[dot.group]},${dot.alpha})`;
+    ctx.fill();
   }
-
-  function frame(ts) {
-    if (current !== 4) { s4RAF = null; return; }
-    if (!s4TransStart) s4TransStart = ts;
-    const elapsed = (ts - s4TransStart) / 1000;
-    ctx.clearRect(0, 0, W, H);
-
-    for (const dot of s4Dots) {
-      const t = ease(Math.min(1, Math.max(0, (elapsed - dot.delay) / S4_DUR)));
-      const { x, y } = dotPos(dot, t);
-      let a = dot.alpha;
-      if (s4Step === 2 && s4Prev <= 1) a *= (0.35 + t * 0.65);
-      if (s4Step === 3 && s4Prev === 2) a *= (0.4 + t * 0.6);
-      ctx.beginPath();
-      ctx.arc(x, y, dot.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${GROUP_COLORS[dot.group]},${a})`;
-      ctx.fill();
-    }
-
-    // Cluster rings: visible at step 1, fade out going to step 2
-    const ringAlpha = s4Step === 1
-      ? ease(Math.min(1, elapsed / S4_DUR))
-      : (s4Prev === 1 && s4Step === 2 ? 1 - ease(Math.min(1, elapsed / S4_DUR)) : 0);
-    if (ringAlpha > 0.01) {
-      clusters.forEach((c, i) => {
-        ctx.save();
-        ctx.globalAlpha = ringAlpha * 0.2;
-        ctx.strokeStyle = `rgba(${GROUP_COLORS[i]},1)`;
-        ctx.lineWidth = 1 * PR;
-        ctx.setLineDash([3 * PR, 4 * PR]);
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, 42 * PR, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.restore();
-      });
-    }
-
-    // Center glow: visible at step 2
-    const glowAlpha = s4Step === 2
-      ? ease(Math.min(1, elapsed / S4_DUR))
-      : (s4Prev === 2 && s4Step === 3 ? 1 - ease(Math.min(1, elapsed / S4_DUR)) : 0);
-    if (glowAlpha > 0.01) {
-      const grd = ctx.createRadialGradient(center.x, center.y, 0, center.x, center.y, 30 * PR);
-      grd.addColorStop(0, `rgba(96,165,250,${0.6 * glowAlpha})`);
-      grd.addColorStop(1, 'rgba(96,165,250,0)');
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.arc(center.x, center.y, 30 * PR, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    s4RAF = requestAnimationFrame(frame);
-  }
-  s4RAF = requestAnimationFrame(frame);
 }
 
 // ── Stat counter (slide 3) ──
@@ -2216,11 +2264,9 @@ document.addEventListener('mousemove', e => {
 
 // ── Keyboard ──
 function goNext() {
-  if (current === 4 && s4Step < 3) { s4Advance(); return; }
   goTo(current + 1, 1);
 }
 function goPrev() {
-  if (current === 4 && s4Step > 0) { s4Retreat(); return; }
   goTo(current - 1, -1);
 }
 document.addEventListener('keydown', e => {
@@ -2365,12 +2411,8 @@ if (isThumb) {
 
   channel.onmessage = ({ data }) => {
     if (data.type === 'goto') goTo(data.n, data.dir);
-    if (data.type === 's4' && current === 4) {
-      const diff = data.step - s4Step;
-      if (diff > 0) for (let i = 0; i < diff; i++) s4Advance();
-      else for (let i = 0; i < -diff; i++) s4Retreat();
-    }
     if (data.type === 'videoOpen') openVideoModal(data.src);
+    if (data.type === 'youtubeOpen') openYouTubeModal(data.id);
     if (data.type === 'videoClose') closeModal();
   };
   channel.postMessage({ type: 'ready' });
@@ -2390,15 +2432,11 @@ if (isThumb) {
     _goTo(next, dir);
   };
 
-  // Patch s4Advance / s4Retreat to broadcast step
-  const _s4Advance = s4Advance;
-  s4Advance = function() { _s4Advance(); if (presenterActive) channel.postMessage({ type: 's4', step: s4Step }); };
-  const _s4Retreat = s4Retreat;
-  s4Retreat = function() { _s4Retreat(); if (presenterActive) channel.postMessage({ type: 's4', step: s4Step }); };
-
-  // Patch openVideoModal / closeModal to mirror on display window
+  // Patch openVideoModal / openYouTubeModal / closeModal to mirror on display window
   const _openVideoModal = openVideoModal;
   openVideoModal = function(src) { _openVideoModal(src); if (presenterActive) channel.postMessage({ type: 'videoOpen', src }); };
+  const _openYouTubeModal = openYouTubeModal;
+  openYouTubeModal = function(id) { _openYouTubeModal(id); if (presenterActive) channel.postMessage({ type: 'youtubeOpen', id }); };
   const _closeModal = closeModal;
   closeModal = function() { _closeModal(); if (presenterActive) channel.postMessage({ type: 'videoClose' }); };
 
