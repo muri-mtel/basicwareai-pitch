@@ -1460,12 +1460,12 @@
       </div>
       <div class="anim-4">
         <div class="s6-tabs">
-          <button class="s6-tab" data-cat="worldcup" onclick="s6SelectCategory('worldcup')">World Cup</button>
-          <button class="s6-tab active" data-cat="creative" onclick="s6SelectCategory('creative')">Creative</button>
+          <button class="s6-tab active" data-cat="worldcup" onclick="s6SelectCategory('worldcup')">World Cup</button>
+          <button class="s6-tab" data-cat="creative" onclick="s6SelectCategory('creative')">Creative</button>
           <button class="s6-tab" data-cat="branding" onclick="s6SelectCategory('branding')">Branding</button>
         </div>
         <!-- World Cup panel -->
-        <div class="s6-panel" id="s6-panel-worldcup">
+        <div class="s6-panel active" id="s6-panel-worldcup">
           <div class="video-thumb" onclick="openYouTubeModal('YaF7jYgS2iw')">
             <img src="https://i.ytimg.com/vi/YaF7jYgS2iw/hqdefault.jpg" alt="Neymar's 2026 World Cup" style="width:100%;display:block;">
             <div class="play-overlay">
@@ -1476,7 +1476,7 @@
           </div>
         </div>
         <!-- Creative panel -->
-        <div class="s6-panel active" id="s6-panel-creative">
+        <div class="s6-panel" id="s6-panel-creative">
           <div class="video-thumb" onclick="openVideoModal('assets/seedanceexample-opt.mp4')">
             <video muted playsinline preload="metadata" id="s6-preview">
               <source src="assets/seedanceexample-opt.mp4#t=0.5" type="video/mp4">
@@ -1925,7 +1925,7 @@ function updateUI() {
 function onSlideEnter(n) {
   if (n === 2) { const v = document.getElementById('s2-bg-video'); if (v) v.play(); }
   if (n === 5) { const v = document.getElementById('s5-bg-video'); if (v) v.play(); }
-  if (n === 8) s6SelectCategory('creative');
+  if (n === 8) s6SelectCategory('worldcup');
   if (n === 3) animateStat();
   if (n === 4) animateS4Canvas();
   if (n === 9) resetSlide7();
